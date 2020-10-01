@@ -4,33 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- Font Awesome link-->
-    <script src="https://kit.fontawesome.com/ca89a4b9f5.js" crossorigin="anonymous"></script>
-     <!-- Compiled and minified CSS -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-     <!-- Compiled and minified JavaScript -->
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- My style sheet -->
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
     <link rel="stylesheet" href="assets/style.css">
 
     <title>Trail Mixer</title>
 </head>
 <body>
     <nav>
-        <div class="nav-wrapper green darken-3" >
-          <a href="index.html" class="brand-logo">Trail Mixer</a>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="hiking.html">Hiking</a></li>
-            <li><a href="biking.html">Biking</a></li>
-            <li><a href="running.html">Running</a></li>
-            <li><a href="climbing.html">Mountain Climbing</a></li>
-          </ul>
-        </div>
-      </nav>
-    
+      <div class="nav-wrapper green darken-3">
+        <a href="#!" class="brand-logo">Trail Mixer</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="index.html">Home Page</a></li>
+          <li><a href="hiking.html">Hiking</a></li>
+          <li><a href="biking.html">Biking</a></li>
+          <li><a href="climbing.html">Mountain Climbing</a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+          <li><a href="index.html">Home Page</a></li>
+          <li><a href="hiking.html">Hiking</a></li>
+          <li><a href="biking.html">Biking</a></li>
+          <li><a href="climbing.html">Mountain Climbing</a></li>
+        </ul>
+      </div>
+    </nav>
       <div class="row container">
-        <div class="col s6 m6 l6">
+        <div class="col s12 m6 l6">
           <div class="card container margin-card">
             <div class="card-image waves-effect waves-block waves-light">
               <img class="activator" src="https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/topic_centers/2019-8/couple-hiking-mountain-climbing-1296x728-header.jpg?w=1155&h=1528">
@@ -44,7 +48,7 @@
               <p>Here is some more information about this product that is only revealed once clicked on.</p>
             </div>
           </div></div>
-        <div class="col s6 m6 l6">
+        <div class="col s12 m6 l6">
           <div class="card container margin-card">
             <div class="card-image waves-effect waves-block waves-light">
               <img class="activator" src="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2009/1/8/1231428282782/Mountain-biking-001.jpg?width=445&quality=85&auto=format&fit=max&s=23b19c63eb6e1863a0b3a3a8b1242ce2">
@@ -58,7 +62,7 @@
               <p>Here is some more information about this product that is only revealed once clicked on.</p>
             </div>
           </div></div>
-        <div class="col s6 m6 l6">
+        <div class="col s12 m6 l6">
           <div class="card container margin-card">
             <div class="card-image waves-effect waves-block waves-light">
               <img class="activator" src="https://media.npr.org/assets/img/2017/07/26/istock-636342222_wide-d9fbaba1698318ac83904ba98ccc28285bc8e89b.jpg?s=1400">
@@ -72,7 +76,7 @@
               <p>Here is some more information about this product that is only revealed once clicked on.</p>
             </div>
           </div></div>
-        <div class="col s6 m6 l6">
+        <div class="col s12 m6 l6">
           <div class="card container margin-card">
             <div class="card-image waves-effect waves-block waves-light">
               <img class="activator" src="https://d3byf4kaqtov0k.cloudfront.net/p/news/wfidh3vr.jpg">
@@ -87,7 +91,15 @@
             </div>
           </div></div>
       </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+      <footer class="page-footer green darken-3">
+        <div class="footer-copyright green darken-3">
+          <div class="container center-align">
+            © 2020 Trail Mixer Project.           
+          </div>
+        </div>
+      </footer>
     <script src="assets/script.js"></script>
+    
 </body>
 </html>
