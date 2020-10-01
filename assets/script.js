@@ -1,21 +1,19 @@
 // store the value of the input
 let city = $("#searchTerm").val();
-// store api key
-const bikeKey = "&appid=91a49fc1d36c35421107a53b3f87c750";
-const runKey = "&appid=91a49fc1d36c35421107a53b3f87c750";
-const climbKey = "&appid=91a49fc1d36c35421107a53b3f87c750";
-const hikeKey = "&appid=91a49fc1d36c35421107a53b3f87c750";
+// Nick's API keys
+const cityKey = "91a49fc1d36c35421107a53b3f87c750";
+const bikeKey = "200931616-afc833c049b5997e40e044a809f9cd91";
+const runKey = "200931616-afc833c049b5997e40e044a809f9cd91";
+const climbKey = "200931616-01e2cafc553024f568bca2e9d24d47b5";
+const hikeKey = "200929750-d723e897b2d3dea9d999e2d05c66faa4";
+const lat = 0;
+const lat = 0;
+const maxd = 0;
 
-let date = new Date();
+//  Biking query url: https://www.mtbproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=
+//  Running query url: https://www.trailrunproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=
+//  Climbing query rul: https://www.mountainproject.com/data/get-routes-for-lat-lon?lat=40.03&lon=-105.25&maxDistance=10&minDiff=5.6&maxDiff=5.10&key=
 
-// /* "date" and "time" are instances of Moment */
-
-// date = date.set({
-//     hour: time.get('hour'),
-//     minute: time.get('minute'),
-//     second: 0,
-//     millisecond: 0,
-//   });
 
 $("#searchTerm").keypress(function(event) { 
 	
@@ -36,7 +34,7 @@ $("#searchBtn").on("click", () => {
         $("#searchTerm").val("");
 
         // full url to call api
-        const queryUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + apiKey;
+        const queryUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + cityKey;
 
         $.ajax({
             url: queryUrl,
@@ -64,17 +62,39 @@ $("#searchBtn").on("click", () => {
                 makeList();
 
             });
+            let lat = response.city.coord.lat;
+            let lon = response.city.coord.lon;
+            let maxd = 10;
+
+
+
+            const hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + lon + "&maxDistance=" + maxd+ "&key=" + hikeKey;
+
+            $.ajax({
+              url: hikeQrl,
+              method: "GET"
+          })
+            .then(function (response){
+              console.log(response);
+
+
+            }
+     
+
     });
+  
+    
+    
 
-    
-    
-    
-//     //-- Local Storage is the name of last known city entry --- 
-//     // list of searched cities has to have "on-click" function for the 
 
-// function makeUVI(){
-//   console.log(response.value);
-// }
+
+
+
+
+
+
+
+
   function makeList() {
     let listItem = $("<li>").addClass("list-group-item").text(city);
     $(".list").append(listItem);
