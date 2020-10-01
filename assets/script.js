@@ -1,11 +1,16 @@
 // store the value of the input
 let city = $("#searchTerm").val();
-// store api key
-const bikeKey = "&appid=91a49fc1d36c35421107a53b3f87c750";
-const runKey = "&appid=91a49fc1d36c35421107a53b3f87c750";
-const climbKey = "&appid=91a49fc1d36c35421107a53b3f87c750";
-const hikeKey = "&appid=91a49fc1d36c35421107a53b3f87c750";
+// Nick's API keys
+const bikeKey = "200931616-afc833c049b5997e40e044a809f9cd91";
+const runKey = "200931616-afc833c049b5997e40e044a809f9cd91";
+const climbKey = "200931616-01e2cafc553024f568bca2e9d24d47b5";
+const hikeKey = "200929750-d723e897b2d3dea9d999e2d05c66faa4";
 
+
+//  Hikiing query url: https://www.hikingproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=
+//  Biking query url: https://www.mtbproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=
+//  Running query url: https://www.trailrunproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=
+//  Climbing query rul: https://www.mountainproject.com/data/get-routes-for-lat-lon?lat=40.03&lon=-105.25&maxDistance=10&minDiff=5.6&maxDiff=5.10&key=
 let date = new Date();
 
 // /* "date" and "time" are instances of Moment */
