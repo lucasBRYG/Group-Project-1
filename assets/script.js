@@ -1,6 +1,7 @@
 $(document).ready(function(){
   $(".button-collapse").sideNav();
   $('select').material_select();
+  $('.collapsible').collapsible();
 });
 // store the value of the input
 let city = $("#searchTerm").val();
