@@ -1,10 +1,5 @@
-$(document).ready(function(){
-  $(".button-collapse").sideNav();
-  $('select').material_select();
-
-});
 // store the value of the input
-let city = $("#searchTerm").val();
+let city = $("#cityName").val();
 // Nick's API keys
 const cityKey = "91a49fc1d36c35421107a53b3f87c750";
 const bikeKey = "200931616-afc833c049b5997e40e044a809f9cd91";
@@ -21,26 +16,32 @@ const lon = 0;
 //  Climbing query rul: https://www.mountainproject.com/data/get-routes-for-lat-lon?lat=40.03&lon=-105.25&maxDistance=10&minDiff=5.6&maxDiff=5.10&key=
 
 
-$("#searchTerm").keypress(function(event) { 
+$("#cityName").keypress(function(event) { 
 	
 	if (event.keyCode === 13) { 
 		event.preventDefault();
-		$("#searchBtn").click(); 
+		$("#cityName").click(); 
 	} 
 });
 
-$("#searchBtn").on("click", () => {
+$(document).ready(function(){
+  $(".button-collapse").sideNav();
+  $('select').material_select();
+
+
+
+$("#searchButton").on("click", () => {
 
         $('#forecastH5').addClass('show');
 
         // get the value of the input from user
-        city = $("#searchTerm").val();
+        city = $("#cityName").val().trim();
 
         // clear input box
         $("#searchTerm").val("");
 
         // full url to call api
-        const queryUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + cityKey;
+        const queryUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + cityKey;
 
         $.ajax({
             url: queryUrl,
@@ -67,13 +68,13 @@ $("#searchBtn").on("click", () => {
                 getCurrentForecast(response);
                 makeList();
 
+                let lat = response.city.coord.lat;
+                let lon = response.city.coord.lon;
+                let maxd = 10;
+
             });
-            let lat = response.city.coord.lat;
-            let lon = response.city.coord.lon;
-            let maxd = 10;
 
-
-
+           
             const hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + lon + "&maxDistance=" + maxd+ "&key=" + hikeKey;
 
             $.ajax({
@@ -89,29 +90,14 @@ $("#searchBtn").on("click", () => {
 
     });
   
+  });
+
     
-    
 
-
-
-
-
-
-
-
-
-
-  function makeList() {
-    let listItem = $("<li>").addClass("list-group-item").text(city);
-    $(".list").append(listItem);
-  }
-//click cards
-$("#list-group-item").on("click", function(event) {
-  event.preventDefault();
-  console.log(list-group-item)
-  getCurrentContitions(list-group-item)
-
-}); 
+  // function makeList() {
+  //   let listItem = $("<li>").addClass("list-group-item").text(city);
+  //   $(".list").append(listItem);
+  // }
 
   function getCurrentConditions (response) {
 
@@ -119,36 +105,40 @@ $("#list-group-item").on("click", function(event) {
     let tempF = (response.list[0].main.temp - 273.15) * 1.80 + 32;
     tempF = Math.floor(tempF);
 
-    $('#currentCity').empty();
+    $('#weatherBox').empty();
 
     // get and set the content 
     let pop = (response.list[0].pop * 100);
     let lat = response.city.coord.lat;
     let lon = response.city.coord.lon;
     let vindex = lat + lon; 
-    const card = $("<div>").addClass("card");
-    const cardBody = $("<div>").addClass("card-body");
-    const city = $("<h4>").addClass("card-title").text(response.city.name);
-    const cityDate = $("<h4>").addClass("card-title").text(response.list[0].dt_txt);
-    const temperature = $("<p>").addClass("card-text current-temp").text("Temperature: " + tempF + " °F");
-    const humidity = $("<p>").addClass("card-text current-humidity").text("Humidity: " + response.list[0].main.humidity + "%");
+    const card = $("<div>").addClass("card blue-grey darken-1");
+    const cardBody = $("<div>").addClass("card-content white-text");
+    const cityDate = $("<h5>").addClass("card-title date").text(response.list[0].dt_txt);
+    const image = $("<div>")
+    const image2 = $("<img>").attr("src", "https://openweathermap.org/img/w/" + response.list[0].weather[0].icon + ".png") 
+    const temperature = $("<p>").addClass("card-text temp").text("Temperature: " + tempF + " °F");
+    const humidity = $("<p>").addClass("card-text humidity").text("Humidity: " + response.list[0].main.humidity + "%");
     const wind = $("<p>").addClass("card-text current-wind").text("Wind Speed: " + response.list[0].wind.speed + " MPH");
-    const image = $("<img>").attr("src", "https://openweathermap.org/img/w/" + response.list[0].weather[0].icon + ".png")
-    const precip = $("<p>").addClass("card-text Visibility").text(`Chance of Precipitation: ${pop}%`);
-    const uvi = $("<p>").addClass("card-text uvindex").text(`UV Index: ${vindex}`);
+    
+    // const precip = $("<p>").addClass("card-text Visibility").text(`Chance of Precipitation: ${pop}%`);
+    // const uvi = $("<p>").addClass("card-text uvindex").text(`UV Index: ${vindex}`);
+
+    // $("div").append('div class="card z-depth-5"> This is the added')
 
     // add to page
-    city.append(cityDate, image, uvi);
-    cardBody.append(city, temperature, humidity, wind,precip);
+    // city.append(cityDate, image, uvi);
+    cardBody.append(cityDate, image, temperature, humidity, wind);
+    image.append(image2);
     card.append(cardBody);
-    $("#currentCity").append(card)
+    $("#weatherBox").append(card)
    
   }
 
 function getCurrentForecast () {
   
   $.ajax({
-    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + apiKey,
+    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + cityKey,
     method: "GET"
   }).then(function (response){
 
