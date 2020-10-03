@@ -1,3 +1,8 @@
+$(document).ready(function(){
+  $(".button-collapse").sideNav();
+  $('select').material_select();
+
+});
 // store the value of the input
 let city = $("#searchTerm").val();
 // Nick's API keys
@@ -7,8 +12,9 @@ const runKey = "200931616-afc833c049b5997e40e044a809f9cd91";
 const climbKey = "200931616-01e2cafc553024f568bca2e9d24d47b5";
 const hikeKey = "200929750-d723e897b2d3dea9d999e2d05c66faa4";
 const lat = 0;
-const lat = 0;
 const maxd = 0;
+const lon = 0;
+
 
 //  Biking query url: https://www.mtbproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=
 //  Running query url: https://www.trailrunproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=
@@ -79,7 +85,7 @@ $("#searchBtn").on("click", () => {
 
 
             }
-     
+            )
 
     });
   
