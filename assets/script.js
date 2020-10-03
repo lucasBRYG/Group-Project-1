@@ -1,4 +1,3 @@
-
 // store the value of the input
 let city = $("#cityName").val();
 // Nick's API keys
@@ -7,6 +6,7 @@ const bikeKey = "200931616-afc833c049b5997e40e044a809f9cd91";
 const runKey = "200931616-afc833c049b5997e40e044a809f9cd91";
 const climbKey = "200931616-01e2cafc553024f568bca2e9d24d47b5";
 const hikeKey = "200929750-d723e897b2d3dea9d999e2d05c66faa4";
+
 var lat = 0;
 var long = 0;
 var maxd = 0;
