@@ -6,10 +6,10 @@ const bikeKey = "200931616-afc833c049b5997e40e044a809f9cd91";
 const runKey = "200931616-afc833c049b5997e40e044a809f9cd91";
 const climbKey = "200931616-01e2cafc553024f568bca2e9d24d47b5";
 const hikeKey = "200929750-d723e897b2d3dea9d999e2d05c66faa4";
-const lat = 0;
-const maxd = 0;
-const lon = 0;
 
+var lat = 0;
+var long = 0;
+var maxd = 0;
 
 //  Biking query url: https://www.mtbproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=
 //  Running query url: https://www.trailrunproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=
@@ -49,41 +49,39 @@ $("#searchButton").on("click", () => {
         })
             .then(function (response) {
 
-                console.log(response);
-
-                console.log(response.city.name);
-                console.log(response.city.coord.lat);
-                console.log(response.city.coord.lon);
-                console.log(response.list[0].weather[0].icon);
-
+                
                 let tempF = (response.list[0].main.temp - 273.15) * 1.80 + 32;
                 console.log(Math.floor(tempF));
 
-                console.log(response.list[0].main.humidity);
-
-                console.log(response.list[0].wind.speed);
-                console.log(response.list[0].pop);
-
                 getCurrentConditions(response);
                 getCurrentForecast(response);
-                makeList();
+                
 
-                let lat = response.city.coord.lat;
-                let lon = response.city.coord.lon;
-                let maxd = 10;
+                 localStorage.setItem("lat", JSON.stringify(response.city.coord.lat));
+                 localStorage.setItem("long",JSON.stringify(response.city.coord.lon));
+                 maxd = 10;
+                 
 
             });
 
-           
-            const hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + lon + "&maxDistance=" + maxd+ "&key=" + hikeKey;
+            console.log(lat);
+            console.log(long);
+            var lat = JSON.parse(localStorage.getItem("lat"));
+            var long = JSON.parse(localStorage.getItem("long"));
+            let hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&key=" + hikeKey;
 
+            console.log(lat);
+            console.log(long);
             $.ajax({
               url: hikeQrl,
               method: "GET"
           })
             .then(function (response){
-              console.log(response);
-
+              console.log(response.trails);
+              console.log(response.trails[0].name);
+              console.log(response.trails[0].location);
+              console.log(response.trails[0].imgSmall);
+              makeList();
 
             }
             )
@@ -94,10 +92,28 @@ $("#searchButton").on("click", () => {
 
     
 
-  // function makeList() {
+   function makeList() {
+
+    $('#trailContent').empty();
+
+    
+    const card = $("<div>").addClass("card blue-grey darken-1");
+    const cardBody = $("<div>").addClass("card-content white-text");
+    const trailName = $("<h5>").addClass("card-title date").text(response.trails[0].name);
+    const image = $("<div>")
+    const image2 = $("<img>").attr("src", response.trails[0].imgSmall);
+    const difficulty= $("<p>").addClass("card-text temp").text("Difficulty: " + tempF + " °F");
+    const stars = $("<p>").addClass("card-text humidity").text("Stars: " + response.trails.stars);
+    const length = $("<p>").addClass("card-text current-wind").text("Length: " + response.trails[0].length + " miles");
+        
+    
+    cardBody.append(trailName, image, difficulty, stars,length);
+    image.append(image2);
+    card.append(cardBody);
+    $("trailContent").append(card)
   //   let listItem = $("<li>").addClass("list-group-item").text(city);
   //   $(".list").append(listItem);
-  // }
+   }
 
   function getCurrentConditions (response) {
 
@@ -111,7 +127,7 @@ $("#searchButton").on("click", () => {
     let pop = (response.list[0].pop * 100);
     let lat = response.city.coord.lat;
     let lon = response.city.coord.lon;
-    let vindex = lat + lon; 
+    
     const card = $("<div>").addClass("card blue-grey darken-1");
     const cardBody = $("<div>").addClass("card-content white-text");
     const cityDate = $("<h5>").addClass("card-title date").text(response.list[0].dt_txt);
@@ -120,15 +136,11 @@ $("#searchButton").on("click", () => {
     const temperature = $("<p>").addClass("card-text temp").text("Temperature: " + tempF + " °F");
     const humidity = $("<p>").addClass("card-text humidity").text("Humidity: " + response.list[0].main.humidity + "%");
     const wind = $("<p>").addClass("card-text current-wind").text("Wind Speed: " + response.list[0].wind.speed + " MPH");
+    const precip = $("<p>").addClass("card-text Visibility").text(`Chance of Precipitation: ${pop}%`);
     
-    // const precip = $("<p>").addClass("card-text Visibility").text(`Chance of Precipitation: ${pop}%`);
-    // const uvi = $("<p>").addClass("card-text uvindex").text(`UV Index: ${vindex}`);
-
     // $("div").append('div class="card z-depth-5"> This is the added')
 
-    // add to page
-    // city.append(cityDate, image, uvi);
-    cardBody.append(cityDate, image, temperature, humidity, wind);
+    cardBody.append(cityDate, image, temperature, humidity, wind, precip);
     image.append(image2);
     card.append(cardBody);
     $("#weatherBox").append(card)
