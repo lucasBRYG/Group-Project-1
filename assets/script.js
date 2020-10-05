@@ -64,12 +64,12 @@ $("#searchButton").on("click", () => {
 
             });
 
-            console.log(lat);
-            console.log(long);
+            console.log(localStorage.lat);
+            console.log(localStorage.long);
             var lat = JSON.parse(localStorage.getItem("lat"));
             var long = JSON.parse(localStorage.getItem("long"));
             let hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&key=" + hikeKey;
-
+            console.log(hikeQrl)
             console.log(lat);
             console.log(long);
             $.ajax({
@@ -81,8 +81,8 @@ $("#searchButton").on("click", () => {
               console.log(response.trails[0].name);
               console.log(response.trails[0].location);
               console.log(response.trails[0].imgSmall);
-              makeList();
-
+              makeList(response);
+              
             }
             )
 
@@ -92,11 +92,11 @@ $("#searchButton").on("click", () => {
 
     
 
-   function makeList() {
+   function makeList(response) {
 
     $('#trailContent').empty();
 
-    
+    console.log(response)
     const card = $("<div>").addClass("card blue-grey darken-1");
     const cardBody = $("<div>").addClass("card-content white-text");
     const trailName = $("<h5>").addClass("card-title date").text(response.trails[0].name);
@@ -107,7 +107,7 @@ $("#searchButton").on("click", () => {
     const length = $("<p>").addClass("card-text current-wind").text("Length: " + response.trails[0].length + " miles");
         
     
-    cardBody.append(trailName, image, difficulty, stars,length);
+    cardBody.append(trailName, image, difficulty, stars, length);
     image.append(image2);
     card.append(cardBody);
     $("trailContent").append(card)
