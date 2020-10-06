@@ -175,7 +175,8 @@
                         </div>                            
                       </div>                     
                       <div class="card-action">
-                        <a href="#">This is a link</a>
+                        <p><input type="text" class="form-control" id="trailname" value="7011192"></p>
+                        <iframe id="map" style="width:100%; max-width:1200px; height:410px;" frameborder="0" scrolling="no" src=""></iframe>                                             
                       </div>
                     </div>
                   </div>
@@ -208,4 +209,9 @@
   
   <script src="assets/script.js"></script>
 </body>
+<script>
+  var url =  "https://www.trailrunproject.com/widget?v=3&map=1&type=trail&x=-11761235&y=4908907&z=5&id="+$("#trailname").val();
+console.log(url);
+ $("#map").attr("src",url);
+</script>
 </html>
