@@ -59,32 +59,41 @@ $("#searchButton").on("click", () => {
                  localStorage.setItem("lat", JSON.stringify(response.city.coord.lat));
                  localStorage.setItem("long",JSON.stringify(response.city.coord.lon));
                  maxd = 10;
+                 lat = JSON.stringify(response.city.coord.lat);
+                 long = JSON.stringify(response.city.coord.lon);
                  
+                 console.log(lat);
+                console.log(long);
+                //var lat = JSON.parse(localStorage.getItem("lat"));
+                //var long = JSON.parse(localStorage.getItem("long"));
+                let hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&key=" + hikeKey;
 
+                console.log(lat);
+                console.log(long);
+                $.ajax({
+                  url: hikeQrl,
+                  method: "GET"
+                })
+                .then(function (response){
+                  console.log(response.trails);
+                  console.log(response.trails[0].name);
+                  console.log(response.trails[0].location);
+                  console.log(response.trails[0].imgSmall);
+                  makeList(response);
+                  $(".rowTrail").on("click", function(){  // Event listener, for when a row of the list  is clicked
+                    //clearCardTrail();
+                    console.log($(this).attr("id"));
+                    generateTrailInfo($(this).attr("id"));
+                  
+                    });           
+
+                });
+
+                 
             });
 
-            console.log(lat);
-            console.log(long);
-            var lat = JSON.parse(localStorage.getItem("lat"));
-            var long = JSON.parse(localStorage.getItem("long"));
-            let hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&key=" + hikeKey;
-
-            console.log(lat);
-            console.log(long);
-            $.ajax({
-              url: hikeQrl,
-              method: "GET"
-          })
-            .then(function (response){
-              console.log(response.trails);
-              console.log(response.trails[0].name);
-              console.log(response.trails[0].location);
-              console.log(response.trails[0].imgSmall);
-              makeList(response);
-
-            }
-            )
-
+            
+            
     });
   
   });
@@ -107,9 +116,12 @@ function makeList(response) {
     var spanDifficulty = $("<span class='badge green white-text' id='difficultyList1'>").text(response.trails[i].difficulty);
     var colLength = $("<div class='col s1 center-align'>");
     var colLocation = $("<div class='col s3 center-align'>");
-    var spanLength = $("<span id='lengthList'>").text(response.trails[i].length);
+    var spanLength = $("<span id='lengthList'>").text(response.trails[i].length + "mi.");
     var spanLocation = $("<span id='lengthList'>").text(response.trails[i].location);
     
+    console.log(response.trails[i].id);
+    li.attr("id",response.trails[i].id);
+    li.addClass("rowTrail");
     trailNameList.text(response.trails[i].name);    
     trailNameList.prepend(icon);
     colDifficulty.append(spanDifficulty);
@@ -195,3 +207,24 @@ function getCurrentForecast () {
     }
   });
 }
+
+function generateTrailInfo(idTrail){
+
+  var hikeQrl = "https://www.hikingproject.com/data/get-trails-by-id?ids="+ idTrail + "&key=" + hikeKey;
+  
+  console.log(hikeQrl);
+
+  $.ajax({
+    url: hikeQrl,
+    method: "GET"
+})
+  .then(function (response){
+   
+    var trailInfo = response.trails[0];
+    console.log(trailInfo);
+    
+  });
+
+
+};
+
