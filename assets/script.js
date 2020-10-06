@@ -94,8 +94,7 @@ $("#searchButton").on("click", () => {
 
    function makeList(response) {
 
-    //$('#trailContent').empty();
-    for (i=0; i < response.trails.length; i++) {
+     for (i=0; i < response.trails.length; i++) {
 
     console.log(response.trails[0].name);
     console.log(response.trails[0].location);
