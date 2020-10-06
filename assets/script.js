@@ -1,4 +1,4 @@
-// store the value of the input (!!! we should take the .val() of of this - rn city will hold the string value of the element !!!)
+// store the value of the input
 let city = $("#cityName").val();
 // Nick's API keys
 const cityKey = "91a49fc1d36c35421107a53b3f87c750";
@@ -10,42 +10,6 @@ const lat = 0;
 const maxd = 0;
 const lon = 0;
 
-//Here's the object that will hold weather data when we pull and push to local storage
-var weatherCallObj = {
-  city: "",
-  lat: "",
-  lon: "",
-  tempF: "",
-  humidity: "",
-  windSpeed: "",
-  windDirection: "",
-  precip: ""
-};
-
-//Here's the object that will hold trail data when we pull and push to local storage
-var trailCallObj = {
-  id : "",
-  name: "",
-  type: "",
-  summary: "",
-  difficulty: "",
-  stars: "",
-  starVotes: "",
-  location: "",
-  url: "",
-  imgSqSmall: "",
-  imgSmall: "",
-  imgSmallMed: "",
-  imgMedium: "",
-  length: "",
-  ascent: "",
-  descent: "",
-  high: "",
-  low: "",
-  longitude: "",
-  latitude: "",
-  conditionStatus: "",
-};
 
 //  Biking query url: https://www.mtbproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=
 //  Running query url: https://www.trailrunproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=
@@ -87,8 +51,6 @@ $("#searchButton").on("click", () => {
 
                 console.log(response);
 
-                setLocalWeather(response);
-
                 console.log(response.city.name);
                 console.log(response.city.coord.lat);
                 console.log(response.city.coord.lon);
@@ -105,6 +67,10 @@ $("#searchButton").on("click", () => {
                 getCurrentConditions(response);
                 getCurrentForecast(response);
                 makeList();
+
+                let lat = response.city.coord.lat;
+                let lon = response.city.coord.lon;
+                let maxd = 10;
 
             });
 
@@ -219,48 +185,4 @@ function getCurrentForecast () {
       }
     }
   });
-}
-//we can call this function to store weather data in local storage
-function setLocalWeather(weatherObject){
-
-  weatherCallObj.city = weatherObject.city.name;
-  weatherCallObj.lat = weatherObject.city.coord.lat;
-  weatherCallObj.lon = weatherObject.city.coord.lon;
-  weatherCallObj.tempF = Math.floor(weatherObject.list.main.temp - 273.15) * 1.80 + 32;
-  weahterCallObj.humidity = weatherObject.list.main.humidity;
-  weatherCallObj.windspeed = weatherObject.list.wind.speed * 0.00062137;
-  weatherCallObj.windDirection = weatherObject.list.wind.deg;
-  weatherCallObj.precip = weatherObject.list.pop;
-
-  localStorage.setItem("weather-call-object", JSON.stringify(weatherCallObj));
-  
-}
-
-//we can call this function to store trail data in local storage
-function setLocalTrail(trailObject){
-
-  trailCallObj.id = trailObject.id;
-  trailCallObj.name = trailObject.name;
-  trailCallObj.type = trailObject.type;
-  trailCallObj.summary = trailObject.summary;
-  trailCallObj.difficulty = trailObject.difficulty;
-  trailCallObj.stars = trailObject.stars;
-  trailCallObj.starVotes = trailObject.starVotes;
-  trailCallObj.location = trailObject.location;
-  trailCallObj.url = trailObject.url;
-  trailCallObj.imgSqSmall = trailObject.imgSqSmall;
-  trailCallObj.imgSmall = trailObject.imgSmall;
-  trailCallObj.imgSmallMed = trailObject.imgSmallMed;
-  trailCallObj.imgMedium = trailObject.imgMedium;
-  trailCallObj.length = trailObject.length;
-  trailCallObj.ascent = trailObject.ascent;
-  trailCallObj.descent = trailObject.descent;
-  trailCallObj.high = trailObject.high;
-  trailCallObj.low = trailObject.low;
-  trailCallObj.longitude = trailObject.longitude;
-  trailCallObj.latitude = trailObject.latutude;
-  trailCallObj.conditionStatus = trailObject.conditionStatus;
-
-  localStorage.setItem("trail-call-object", JSON.stringify(trailCallObj));
-
 }
