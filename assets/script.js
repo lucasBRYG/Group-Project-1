@@ -142,7 +142,7 @@ function makeList(response) {
     var spanLength = $("<span class='col s3 center-align'>").text(response.trails[i].length);
     var spanLocation = $("<span class='col s3 center-align'>").text(response.trails[i].location);
     
-  
+    }
    }
 
     trailNameList.text(response.trails[i].name);    
