@@ -54,12 +54,14 @@ $("#searchButton").on("click", () => {
                 console.log(Math.floor(tempF));
 
                 getCurrentConditions(response);
-                getCurrentForecast(response);
+                // getCurrentForecast(response);
                 
 
                  localStorage.setItem("lat", JSON.stringify(response.city.coord.lat));
                  localStorage.setItem("long",JSON.stringify(response.city.coord.lon));
-                 maxd = 10;
+                 var maxd = $("#distance").val();
+                 localStorage.setItem("distance", JSON.stringify(maxd));
+                 
                  
 
             });
@@ -68,8 +70,11 @@ $("#searchButton").on("click", () => {
             console.log(localStorage.long);
             var lat = JSON.parse(localStorage.getItem("lat"));
             var long = JSON.parse(localStorage.getItem("long"));
-            let hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&key=" + hikeKey;
-            console.log(hikeQrl)
+            var maxd = JSON.parse(localStorage.getItem("distance"));
+            console.log(maxd);
+           
+            let hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + $("#distance").val() + "&key=" + hikeKey;
+            console.log(hikeQrl);
             console.log(lat);
             console.log(long);
             $.ajax({
@@ -93,26 +98,58 @@ $("#searchButton").on("click", () => {
     
 
    function makeList(response) {
+    var i;
+    for (i = 0; i < response.trails.length; i++) {
 
-    $('#trailContent').empty();
+    
 
-    console.log(response)
+    // $('#trailContent').empty();
+    console.log(response.trails[1].name);
+    console.log(response.trails[1].location);
+    console.log(response.trails[1].length);
+    console.log(response.trails[1].difficulty);
+    var li = $("<li>");
+    var rowList = $("<div class='row collapsible-header' style='margin-bottom: 0px;'>");
+    var colName = $("<div class='col s6'>");
+    var trailNameList = $("<div id='trailNameList'>").text(response.trails[i].name);
+    var icon = $("<i class='material-icons'>").text("place");
+    var span = $("<span class='badge green white-text' id='difficultyList1'>").text(response.trails[i].difficulty);
+    var colLength = $("<div class='col s3 center-align'>");
+    var colLocation = $("<div class='col s3 center-align'>");
+    var spanLength = $("<span class='col s3 center-align'>").text(response.trails[i].length);
+    var spanLocation = $("<span class='col s3 center-align'>").text(response.trails[i].location);
+    trailNameList.text(response.trails[0].name);
+    trailNameList.prepend(span);
+    trailNameList.prepend(icon);
+    colLocation.append(spanLocation);
+    colLength.append(spanLength);
+    colName.append(trailNameList);
+    rowList.append(trailNameList,colLength,colLocation);
+    li.append(rowList);
+    $(".collection").append(li);
+  }
+
+
+
+
+
+
+
     const card = $("<div>").addClass("card blue-grey darken-1");
     const cardBody = $("<div>").addClass("card-content white-text");
     const trailName = $("<h5>").addClass("card-title date").text(response.trails[0].name);
     const image = $("<div>")
     const image2 = $("<img>").attr("src", response.trails[0].imgSmall);
-    const difficulty= $("<p>").addClass("card-text temp").text("Difficulty: " + tempF + " °F");
     const stars = $("<p>").addClass("card-text humidity").text("Stars: " + response.trails.stars);
     const length = $("<p>").addClass("card-text current-wind").text("Length: " + response.trails[0].length + " miles");
         
     
-    cardBody.append(trailName, image, difficulty, stars, length);
+    cardBody.append(trailName, image, stars, length);
     image.append(image2);
     card.append(cardBody);
+
     $("trailContent").append(card)
-  //   let listItem = $("<li>").addClass("list-group-item").text(city);
-  //   $(".list").append(listItem);
+  
    }
 
   function getCurrentConditions (response) {
@@ -147,54 +184,54 @@ $("#searchButton").on("click", () => {
    
   }
 
-function getCurrentForecast () {
+// function getCurrentForecast () {
   
-  $.ajax({
-    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + cityKey,
-    method: "GET"
-  }).then(function (response){
+//   $.ajax({
+//     url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + cityKey,
+//     method: "GET"
+//   }).then(function (response){
 
-    console.log(response)
-    console.log(response.dt_txt)
-    $('#forecast').empty();
+//     console.log(response)
+//     console.log(response.dt_txt)
+//     $('#forecast').empty();
 
-    // variable to hold response.list
-    let results = response.list;
-    console.log(results)
+//     // variable to hold response.list
+//     let results = response.list;
+//     console.log(results)
     
-    //declare start date to check against
-    // startDate = 20
-    //have end date, endDate = startDate + 5
+//     //declare start date to check against
+//     // startDate = 20
+//     //have end date, endDate = startDate + 5
 
-    for (let i = 0; i < results.length; i++) {
+//     for (let i = 0; i < results.length; i++) {
 
-      let day = Number(results[i].dt_txt.split('-')[2].split(' ')[0]);
-      let hour = results[i].dt_txt.split('-')[2].split(' ')[1];
-      console.log(day);
-      console.log(hour);
+//       let day = Number(results[i].dt_txt.split('-')[2].split(' ')[0]);
+//       let hour = results[i].dt_txt.split('-')[2].split(' ')[1];
+//       console.log(day);
+//       console.log(hour);
 
-      if(results[i].dt_txt.indexOf("12:00:00") !== -1){
+//       if(results[i].dt_txt.indexOf("12:00:00") !== -1){
         
-        // get the temperature and convert to fahrenheit 
-        let temp = (results[i].main.temp - 273.15) * 1.80 + 32;
-        let tempF = Math.floor(temp);
-        let list = response.list;
-        let pop = (response.list[i].pop * 100);
-        const card = $("<div>").addClass("card col-md-2 ml-4 bg-primary text-white");
-        const cardBody = $("<div>").addClass("card-body p-3 forecastBody")
-        const cityDate = $("<h4>").addClass("card-title").text(list[i].dt_txt);
-        const temperature = $("<p>").addClass("card-text current-temp").text("Temperature: " + tempF + " °F");
-        const humidity = $("<p>").addClass("card-text current-humidity").text("Humidity: " + response.list[i].main.humidity + "%");
-        const wind = $("<p>").addClass("card-text current-wind").text("Wind Speed: " + response.list[i].wind.speed + " MPH");
-        const image = $("<img>").attr("src", "https://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png")
-        const precip = $("<p>").addClass("card-text Visibility").text("Chance of Precipitation: " + pop + " %");
+//         // get the temperature and convert to fahrenheit 
+//         let temp = (results[i].main.temp - 273.15) * 1.80 + 32;
+//         let tempF = Math.floor(temp);
+//         let list = response.list;
+//         let pop = (response.list[i].pop * 100);
+//         const card = $("<div>").addClass("card col-md-2 ml-4 bg-primary text-white");
+//         const cardBody = $("<div>").addClass("card-body p-3 forecastBody")
+//         const cityDate = $("<h4>").addClass("card-title").text(list[i].dt_txt);
+//         const temperature = $("<p>").addClass("card-text current-temp").text("Temperature: " + tempF + " °F");
+//         const humidity = $("<p>").addClass("card-text current-humidity").text("Humidity: " + response.list[i].main.humidity + "%");
+//         const wind = $("<p>").addClass("card-text current-wind").text("Wind Speed: " + response.list[i].wind.speed + " MPH");
+//         const image = $("<img>").attr("src", "https://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png")
+//         const precip = $("<p>").addClass("card-text Visibility").text("Chance of Precipitation: " + pop + " %");
     
 
-        cardBody.append(cityDate, image, temperature, humidity, wind, precip);
-        card.append(cardBody);
-        $("#forecast").append(card);
+//         cardBody.append(cityDate, image, temperature, humidity, wind, precip);
+//         card.append(cardBody);
+//         $("#forecast").append(card);
 
-      }
-    }
-  });
-}
+//       }
+//     }
+//   });
+// }
