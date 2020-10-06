@@ -54,21 +54,27 @@ $("#searchButton").on("click", () => {
 
                 // getCurrentConditions(response);
                 getCurrentForecast(response);
+
                 
 
                  localStorage.setItem("lat", JSON.stringify(response.city.coord.lat));
                  localStorage.setItem("long",JSON.stringify(response.city.coord.lon));
-                 maxd = 10;
+                 var maxd = $("#distance").val();
+                 localStorage.setItem("distance", JSON.stringify(maxd));
+                 
                  
 
             });
 
-            console.log(lat);
-            console.log(long);
+            console.log(localStorage.lat);
+            console.log(localStorage.long);
             var lat = JSON.parse(localStorage.getItem("lat"));
             var long = JSON.parse(localStorage.getItem("long"));
-            let hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&key=" + hikeKey;
-
+            var maxd = JSON.parse(localStorage.getItem("distance"));
+            console.log(maxd);
+           
+            let hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + $("#distance").val() + "&key=" + hikeKey;
+            console.log(hikeQrl);
             console.log(lat);
             console.log(long);
             $.ajax({
@@ -81,6 +87,8 @@ $("#searchButton").on("click", () => {
               console.log(response.trails[0].location);
               console.log(response.trails[0].imgSmall);
               makeList(response);
+
+
 
             }
             )
@@ -110,6 +118,33 @@ function makeList(response) {
     var spanLength = $("<span id='lengthList'>").text(response.trails[i].length);
     var spanLocation = $("<span id='lengthList'>").text(response.trails[i].location);
     
+
+
+   function makeList(response) {
+    var i;
+    for (i = 0; i < response.trails.length; i++) {
+
+    
+
+    // $('#trailContent').empty();
+    console.log(response.trails[1].name);
+    console.log(response.trails[1].location);
+    console.log(response.trails[1].length);
+    console.log(response.trails[1].difficulty);
+    var li = $("<li>");
+    var rowList = $("<div class='row collapsible-header' style='margin-bottom: 0px;'>");
+    var colName = $("<div class='col s6'>");
+    var trailNameList = $("<div id='trailNameList'>").text(response.trails[i].name);
+    var icon = $("<i class='material-icons'>").text("place");
+    var span = $("<span class='badge green white-text' id='difficultyList1'>").text(response.trails[i].difficulty);
+    var colLength = $("<div class='col s3 center-align'>");
+    var colLocation = $("<div class='col s3 center-align'>");
+    var spanLength = $("<span class='col s3 center-align'>").text(response.trails[i].length);
+    var spanLocation = $("<span class='col s3 center-align'>").text(response.trails[i].location);
+    
+    }
+   }
+
     trailNameList.text(response.trails[i].name);    
     trailNameList.prepend(icon);
     colDifficulty.append(spanDifficulty);
@@ -122,6 +157,7 @@ function makeList(response) {
     
   }
 }
+
 
   function getCurrentConditions (response) {
 
@@ -155,6 +191,7 @@ function makeList(response) {
     $("#weatherBox").append(card)
    
   }
+
 
 function getCurrentForecast () {  
   $.ajax({
@@ -195,3 +232,4 @@ function getCurrentForecast () {
     }
   });
 }
+
