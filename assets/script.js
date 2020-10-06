@@ -113,7 +113,23 @@ function makeList(response) {
     var trailNameList = $("<div id='trailNameList'>");
     var icon = $("<i class='material-icons'>").text("place");
     var colDifficulty = $("<div class='col s2'>");
-    var spanDifficulty = $("<span class='badge green white-text' id='difficultyList1'>").text(response.trails[i].difficulty);
+
+    if (response.trails[i].difficulty === "green"){
+    var spanDifficulty = $("<span class='badge green white-text' id='difficultyList1'>").text("Beginner")
+    }
+    if (response.trails[i].difficulty === "blue")[
+     spanDifficulty = $("<span class='badge blue white-text' id='difficultyList1'>").text("Easy")
+    ]
+    if (response.trails[i].difficulty === "greenBlue")[
+      spanDifficulty = $("<span class='badge cyan white-text' id='difficultyList1'>").text("Intermediate")
+     ]
+     if (response.trails[i].difficulty === "blueBlack")[
+      spanDifficulty = $("<span class='badge indigo darken-4 white-text' id='difficultyList1'>").text("Difficult")
+     ]
+     if (response.trails[i].difficulty === "black")[
+      spanDifficulty = $("<span class='badge black white-text' id='difficultyList1'>").text("Expert")
+     ]
+
     var colLength = $("<div class='col s1 center-align'>");
     var colLocation = $("<div class='col s3 center-align'>");
     var spanLength = $("<span id='lengthList'>").text(response.trails[i].length);
@@ -125,9 +141,6 @@ function makeList(response) {
     var i;
     for (i = 0; i < response.trails.length; i++) {
 
-    
-
-    // $('#trailContent').empty();
     console.log(response.trails[1].name);
     console.log(response.trails[1].location);
     console.log(response.trails[1].length);
@@ -177,7 +190,7 @@ function makeList(response) {
     const cardBody = $("<div>").addClass("card-content white-text");
     const cityDate = $("<h5>").addClass("card-title date").text(response.list[0].dt_txt);
     const image = $("<div>")
-    const image2 = $("<img>").attr("src", "https://openweathermap.org/img/w/" + response.list[0].weather[0].icon + ".png") 
+    const image2 = $("<img>").attr("src", "https://openweathermap.org/img/w/" + response.list[0].weather[0].icon + ".png");
     const temperature = $("<p>").addClass("card-text temp").text("Temperature: " + tempF + " °F");
     const humidity = $("<p>").addClass("card-text humidity").text("Humidity: " + response.list[0].main.humidity + "%");
     const wind = $("<p>").addClass("card-text current-wind").text("Wind Speed: " + response.list[0].wind.speed + " MPH");
@@ -229,6 +242,8 @@ function getCurrentForecast () {
         image.append(image2);
         card.append(cardBody);
         $("#weatherBox").append(card);
+        
+        
       }
     }
   });
