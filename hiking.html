@@ -102,34 +102,14 @@
                     </nav>
                     <div id="trailContent" class="card-content">
                       <ul class="collection">
-                        <li>
+                        <!-- <li>
                           <div class="row collapsible-header" style="margin-bottom: 0px;">
-                            <div class="col s6 "><div id="trailNameList1"><i class="material-icons">place</i># Trail Name<span class="badge green white-text" id="difficultyList1">Easy</span></div></div>
-                            <div class="col s3 center-align"><span id="lengthList">10.5 mi</span></div>
+                            <div class="col s5 "><div id="trailNameList1"><i class="material-icons">place</i># Trail Name</div></div>
+                            <div class="col s2"><span class="badge green white-text" id="difficultyList1">Easy</span></div>
+                            <div class="col s2 center-align"><span id="lengthList">10.5 mi</span></div>
                             <div class="col s3 center-align"><span id="cityList">Gaithersburg,MD</span></div>
                           </div>  
-                        </li>
-                        <li>
-                          <div class="row collapsible-header" style="margin-bottom: 0px;">
-                            <div class="col s6"><div id="trailNameList1"><i class="material-icons">place</i># Trail Name<span class="badge blue white-text" id="difficultyList1">Intermediate</span></div></div>
-                            <div class="col s3 center-align"><span id="lengthList">9.8 mi</span></div>
-                            <div class="col s3 center-align"><span id="cityList">Baltimore,MD</span></div>
-                          </div>  
-                        </li>            
-                        <li>
-                          <div class="row collapsible-header" style="margin-bottom: 0px;">
-                            <div class="col s6"><div id="trailNameList1"><i class="material-icons">place</i># Trail Name<span class="badge red white-text" id="difficultyList1">Difficult</span></div></div>
-                            <div class="col s3 center-align"><span id="lengthList">20.5 mi</span></div>
-                            <div class="col s3 center-align"><span id="cityList">Rockville,MD</span></div>
-                          </div>  
-                        </li>
-                        <li>
-                          <div class="row collapsible-header" style="margin-bottom: 0px;">
-                            <div class="col s6"><div id="trailNameList1"><i class="material-icons">place</i># Trail Name<span class="badge black white-text" id="dificultyList1">Very Difficulty</span></div></div>
-                            <div class="col s3 center-align"><span id="lengthList">3.7 mi</span></div>
-                            <div class="col s3 center-align"><span id="cityList">Bethesda,MD</span></div>
-                          </div>  
-                        </li>            
+                        </li>                        -->
                       </ul>
                     </div>  
                   </div>
@@ -175,7 +155,8 @@
                         </div>                            
                       </div>                     
                       <div class="card-action">
-                        <a href="#">This is a link</a>
+                        <p><input type="text" class="form-control" id="trailname" value="7011192"></p>
+                        <iframe id="map" style="width:100%; max-width:1200px; height:410px;" frameborder="0" scrolling="no" src=""></iframe>   
                       </div>
                     </div>
                   </div>
@@ -217,6 +198,11 @@
   
   <script src="assets/script.js"></script>
 </body>
+<script>
+  var url =  "https://www.trailrunproject.com/widget?v=3&map=1&type=trail&x=-11761235&y=4908907&z=5&id="+$("#trailname").val();
+console.log(url);
+ $("#map").attr("src",url);
+</script>
 </html>
 
 

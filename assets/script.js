@@ -81,7 +81,7 @@ $("#searchButton").on("click", () => {
               console.log(response.trails[0].name);
               console.log(response.trails[0].location);
               console.log(response.trails[0].imgSmall);
-              makeList();
+              makeList(response);
 
             }
             )
@@ -92,28 +92,39 @@ $("#searchButton").on("click", () => {
 
     
 
-   function makeList() {
+   function makeList(response) {
 
-    $('#trailContent').empty();
+     for (i=0; i < response.trails.length; i++) {
 
+    console.log(response.trails[0].name);
+    console.log(response.trails[0].location);
+    console.log(response.trails[0].length);
+    console.log(response.trails[0].difficulty);
+      
+    var li = $("<li>");
+    var rowList = $("<div class='row collapsible-header' style='margin-bottom: 0px;'>");
+    var colName = $("<div class='col s6'>");
+    var trailNameList = $("<div id='trailNameList'>");
+    var icon = $("<i class='material-icons'>").text("place");
+    var colDifficulty = $("<div class='col s2'>");
+    var spanDifficulty = $("<span class='badge green white-text' id='difficultyList1'>").text(response.trails[i].difficulty);
+    var colLength = $("<div class='col s1 center-align'>");
+    var colLocation = $("<div class='col s3 center-align'>");
+    var spanLength = $("<span id='lengthList'>").text(response.trails[i].length);
+    var spanLocation = $("<span id='lengthList'>").text(response.trails[i].location);
     
-    const card = $("<div>").addClass("card blue-grey darken-1");
-    const cardBody = $("<div>").addClass("card-content white-text");
-    const trailName = $("<h5>").addClass("card-title date").text(response.trails[0].name);
-    const image = $("<div>")
-    const image2 = $("<img>").attr("src", response.trails[0].imgSmall);
-    const difficulty= $("<p>").addClass("card-text temp").text("Difficulty: " + tempF + " °F");
-    const stars = $("<p>").addClass("card-text humidity").text("Stars: " + response.trails.stars);
-    const length = $("<p>").addClass("card-text current-wind").text("Length: " + response.trails[0].length + " miles");
-        
+    trailNameList.text(response.trails[i].name);    
+    trailNameList.prepend(icon);
+    colDifficulty.append(spanDifficulty);
+    colLocation.append(spanLocation);
+    colLength.append(spanLength);
+    colName.append(trailNameList);
+    rowList.append(colName,colDifficulty,colLength,colLocation);
+    li.append(rowList);
+    $(".collection").append(li);
     
-    cardBody.append(trailName, image, difficulty, stars,length);
-    image.append(image2);
-    card.append(cardBody);
-    $("trailContent").append(card)
-  //   let listItem = $("<li>").addClass("list-group-item").text(city);
-  //   $(".list").append(listItem);
-   }
+  }
+ }
 
   function getCurrentConditions (response) {
 
@@ -137,6 +148,7 @@ $("#searchButton").on("click", () => {
     const humidity = $("<p>").addClass("card-text humidity").text("Humidity: " + response.list[0].main.humidity + "%");
     const wind = $("<p>").addClass("card-text current-wind").text("Wind Speed: " + response.list[0].wind.speed + " MPH");
     const precip = $("<p>").addClass("card-text Visibility").text(`Chance of Precipitation: ${pop}%`);
+    
     
     // $("div").append('div class="card z-depth-5"> This is the added')
 
