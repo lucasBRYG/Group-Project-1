@@ -72,8 +72,9 @@ $("#searchButton").on("click", () => {
             var long = JSON.parse(localStorage.getItem("long"));
             var maxd = JSON.parse(localStorage.getItem("distance"));
             console.log(maxd);
+            var quality
            
-            let hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + $("#distance").val() + "&key=" + hikeKey;
+            let hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + $("#distance").val() + "sort=" + quality + "&key=" + hikeKey;
             console.log(hikeQrl);
             console.log(lat);
             console.log(long);
