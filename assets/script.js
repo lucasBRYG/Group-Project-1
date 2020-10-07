@@ -31,6 +31,9 @@ $(document).ready(function(){
 
 $("#searchButton").on("click", () => {
 
+
+        // localStorage.clear();
+
         $('#forecastH5').addClass('show');
 
         // get the value of the input from user
@@ -38,6 +41,9 @@ $("#searchButton").on("click", () => {
 
         // clear cityname input box
         $("#cityName").val("");
+
+
+
 
         // full url to call api
         const queryUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + cityKey;
@@ -59,141 +65,92 @@ $("#searchButton").on("click", () => {
 
                  localStorage.setItem("lat", JSON.stringify(response.city.coord.lat));
                  localStorage.setItem("long",JSON.stringify(response.city.coord.lon));
+
+                 lat = JSON.stringify(response.city.coord.lat);
+                 long = JSON.stringify(response.city.coord.lon);
+
                  var maxd = $("#distance").val();
                  localStorage.setItem("distance", JSON.stringify(maxd));
                  
-                 
+                
+                //  console.log(lat);
+                // console.log(long);
+                var lat = JSON.parse(localStorage.getItem("lat"));
+                var long = JSON.parse(localStorage.getItem("long"));
+                let hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&key=" + hikeKey;
 
+                console.log(lat);
+                console.log(long);
+                $.ajax({
+                  url: hikeQrl,
+                  method: "GET"
+                })
+                .then(function (response){
+                  console.log(response.trails);
+                  console.log(response.trails[0].name);
+                  console.log(response.trails[0].location);
+                  console.log(response.trails[0].imgSmall);
+                  makeList(response);
+                  $(".rowTrail").on("click", function(){  // Event listener, for when a row of the list  is clicked
+                    //clearCardTrail();
+                    console.log($(this).attr("id"));
+                    generateTrailInfo($(this).attr("id"));
+                  
+                    });           
+
+                });
+
+                 
             });
 
-            console.log(localStorage.lat);
-            console.log(localStorage.long);
-            var lat = JSON.parse(localStorage.getItem("lat"));
-            var long = JSON.parse(localStorage.getItem("long"));
-            var maxd = JSON.parse(localStorage.getItem("distance"));
-            console.log(maxd);
-            var quality
-           
-            let hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + $("#distance").val() + "sort=" + quality + "&key=" + hikeKey;
-            console.log(hikeQrl);
-            console.log(lat);
-            console.log(long);
-            $.ajax({
-              url: hikeQrl,
-              method: "GET"
-          })
-            .then(function (response){
-              console.log(response.trails);
-              console.log(response.trails[0].name);
-              console.log(response.trails[0].location);
-              console.log(response.trails[0].imgSmall);
-              makeList(response);
-
-
-
-            }
-            )
+            
 
     });
   
   });
 
-// function makeList(response) {
+function makeList(response) {
 
-//     for (i=0; i < response.trails.length; i++) {
-
-//     console.log(response.trails[0].name);
-//     console.log(response.trails[0].location);
-//     console.log(response.trails[0].length);
-//     console.log(response.trails[0].difficulty);
-      
-//     var li = $("<li>");
-//     var rowList = $("<div class='row collapsible-header' style='margin-bottom: 0px;'>");
-//     var colName = $("<div class='col s6'>");
-//     var trailNameList = $("<div id='trailNameList'>");
-//     var icon = $("<i class='material-icons'>").text("place");
-//     var colDifficulty = $("<div class='col s2'>");
-
-//     if (response.trails[i].difficulty === "green"){
-//     var spanDifficulty = $("<span class='badge green white-text' id='difficultyList1'>").text("Beginner")
-//     }
-//     if (response.trails[i].difficulty === "blue")[
-//      spanDifficulty = $("<span class='badge blue white-text' id='difficultyList1'>").text("Easy")
-//     ]
-//     if (response.trails[i].difficulty === "greenBlue")[
-//       spanDifficulty = $("<span class='badge cyan white-text' id='difficultyList1'>").text("Intermediate")
-//      ]
-//      if (response.trails[i].difficulty === "blueBlack")[
-//       spanDifficulty = $("<span class='badge indigo darken-4 white-text' id='difficultyList1'>").text("Difficult")
-//      ]
-//      if (response.trails[i].difficulty === "black")[
-//       spanDifficulty = $("<span class='badge black white-text' id='difficultyList1'>").text("Expert")
-//      ]
-
-//     var colLength = $("<div class='col s1 center-align'>");
-//     var colLocation = $("<div class='col s3 center-align'>");
-//     var spanLength = $("<span id='lengthList'>").text(response.trails[i].length);
-//     var spanLocation = $("<span id='lengthList'>").text(response.trails[i].location);
-    
-
-
-   function makeList(response) {
-    var i;
-    for (i = 0; i < response.trails.length; i++) {
-
-    console.log(response.trails[1].name);
-    console.log(response.trails[1].location);
-    console.log(response.trails[1].length);
-    console.log(response.trails[1].difficulty);
-    var li = $("<li>");
-    var rowList = $("<div class='row collapsible-header' style='margin-bottom: 0px;'>");
-    var colName = $("<div class='col s6'>");
-    var trailNameList = $("<div id='trailNameList'>").text(response.trails[i].name);
-    var icon = $("<i class='material-icons'>").text("place");
-    var span = $("<span class='badge green white-text' id='difficultyList1'>").text(response.trails[i].difficulty);
-    var colLength = $("<div class='col s3 center-align'>");
-    var colLocation = $("<div class='col s3 center-align'>");
-    var spanLength = $("<span class='col s3 center-align'>").text(response.trails[i].length);
-    var spanLocation = $("<span class='col s3 center-align'>").text(response.trails[i].location);
-    
-    }
+  $(".collection").empty();
 
     for (i=0; i < response.trails.length; i++) {
 
-      console.log(response.trails[0].name);
-      console.log(response.trails[0].location);
-      console.log(response.trails[0].length);
-      console.log(response.trails[0].difficulty);
-        
-      var li = $("<li>");
-      var rowList = $("<div class='row collapsible-header' style='margin-bottom: 0px;'>");
-      var colName = $("<div class='col s6'>");
-      var trailNameList = $("<div id='trailNameList'>");
-      var icon = $("<i class='material-icons'>").text("place");
-      var colDifficulty = $("<div class='col s2'>");
-  
-      if (response.trails[i].difficulty === "green"){
-      var spanDifficulty = $("<span class='badge green white-text' id='difficultyList1'>").text("Beginner")
-      }
-      if (response.trails[i].difficulty === "blue")[
-       spanDifficulty = $("<span class='badge blue white-text' id='difficultyList1'>").text("Easy")
-      ]
-      if (response.trails[i].difficulty === "greenBlue")[
-        spanDifficulty = $("<span class='badge cyan white-text' id='difficultyList1'>").text("Intermediate")
-       ]
-       if (response.trails[i].difficulty === "blueBlack")[
-        spanDifficulty = $("<span class='badge indigo darken-4 white-text' id='difficultyList1'>").text("Difficult")
-       ]
-       if (response.trails[i].difficulty === "black")[
-        spanDifficulty = $("<span class='badge black white-text' id='difficultyList1'>").text("Expert")
-       ]
-  
-      var colLength = $("<div class='col s1 center-align'>");
-      var colLocation = $("<div class='col s3 center-align'>");
-      var spanLength = $("<span id='lengthList'>").text(response.trails[i].length);
-      var spanLocation = $("<span id='lengthList'>").text(response.trails[i].location);
+    console.log(response.trails[0].name);
+    console.log(response.trails[0].location);
+    console.log(response.trails[0].length);
+    console.log(response.trails[0].difficulty);
       
-   }
+    var li = $("<li>");
+    var rowList = $("<div class='row collapsible-header' style='margin-bottom: 0px;'>");
+    var colName = $("<div class='col s6'>");
+    var trailNameList = $("<div id='trailNameList'>");
+    var icon = $("<i class='material-icons'>").text("place");
+    var colDifficulty = $("<div class='col s2'>");
+
+    if (response.trails[i].difficulty === "green"){
+    var spanDifficulty = $("<span class='badge green white-text' id='difficultyList1'>").text("Beginner")
+    }
+    if (response.trails[i].difficulty === "blue")[
+     spanDifficulty = $("<span class='badge blue white-text' id='difficultyList1'>").text("Easy")
+    ]
+    if (response.trails[i].difficulty === "greenBlue")[
+      spanDifficulty = $("<span class='badge cyan white-text' id='difficultyList1'>").text("Intermediate")
+     ]
+     if (response.trails[i].difficulty === "blueBlack")[
+      spanDifficulty = $("<span class='badge indigo darken-4 white-text' id='difficultyList1'>").text("Difficult")
+     ]
+     if (response.trails[i].difficulty === "black")[
+      spanDifficulty = $("<span class='badge black white-text' id='difficultyList1'>").text("Expert")
+     ]
+
+    var colLength = $("<div class='col s1 center-align'>");
+    var colLocation = $("<div class='col s3 center-align'>");
+    var spanLength = $("<span id='lengthList'>").text(response.trails[i].length);
+    var spanLocation = $("<span id='lengthList'>").text(response.trails[i].location);
+    
+    console.log(response.trails[i].id);
+    li.attr("id",response.trails[i].id);
+    li.addClass("rowTrail");
 
     trailNameList.text(response.trails[i].name);    
     trailNameList.prepend(icon);
@@ -206,7 +163,7 @@ $("#searchButton").on("click", () => {
     $(".collection").append(li);
     
   }
-
+}
 
 
   function getCurrentConditions (response) {
@@ -226,7 +183,7 @@ $("#searchButton").on("click", () => {
     const cardBody = $("<div>").addClass("card-content white-text");
     const cityDate = $("<h5>").addClass("card-title date").text(response.list[0].dt_txt);
     const image = $("<div>")
-    const image2 = $("<img>").attr("src", "https://openweathermap.org/img/w/" + response.list[0].weather[0].icon + ".png");
+    const image2 = $("<img>").attr("src", "https://openweathermap.org/img/w/" + response.list[0].weather[0].icon + ".png") 
     const temperature = $("<p>").addClass("card-text temp").text("Temperature: " + tempF + " °F");
     const humidity = $("<p>").addClass("card-text humidity").text("Humidity: " + response.list[0].main.humidity + "%");
     const wind = $("<p>").addClass("card-text current-wind").text("Wind Speed: " + response.list[0].wind.speed + " MPH");
@@ -278,9 +235,29 @@ function getCurrentForecast () {
         image.append(image2);
         card.append(cardBody);
         $("#weatherBox").append(card);
-        
-        
       }
     }
   });
 }
+
+function generateTrailInfo(idTrail){
+
+  var hikeQrl = "https://www.hikingproject.com/data/get-trails-by-id?ids="+ idTrail + "&key=" + hikeKey;
+  
+  console.log(hikeQrl);
+
+  $.ajax({
+    url: hikeQrl,
+    method: "GET"
+})
+  .then(function (response){
+   
+    var trailInfo = response.trails[0];
+    console.log(trailInfo);
+    
+  });
+
+
+};
+
+
