@@ -28,6 +28,10 @@ $(document).ready(function(){
   $(".button-collapse").sideNav();
   $('select').material_select();
   $('#weatherBox').empty();
+  $('#cardTrailInfo').hide();
+  $('#trailBox').hide();
+  $('#weatherCard').hide();
+
 
 
 $("#searchButton").on("click", () => {
@@ -37,7 +41,8 @@ $("#searchButton").on("click", () => {
 
         // localStorage.clear();
 
-        $('#forecastH5').addClass('show');
+        $('#trailBox').show();
+        $('#weatherCard').show();
 
         // get the value of the input from user
         city = $("#cityName").val().trim();
@@ -72,8 +77,6 @@ $("#searchButton").on("click", () => {
 
                  var maxd = $("#distance").val();
                  localStorage.setItem("distance", JSON.stringify(maxd));
-                 
-                
 
                 //  console.log(lat);
                 // console.log(long);
@@ -96,19 +99,14 @@ $("#searchButton").on("click", () => {
                   makeList(response);
                   $(".rowTrail").on("click", function(){  // Event listener, for when a row of the list  is clicked
                     //clearCardTrail();
+                    $('#cardTrailInfo').show();
                     console.log($(this).attr("id"));
                     generateTrailInfo($(this).attr("id"));
                   
                     });           
 
                 });
-
-                 
             });
-
-
-
-
     });
   
   });
@@ -124,7 +122,8 @@ function makeList(response) {
     console.log(response.trails[0].location);
     console.log(response.trails[0].length);
     console.log(response.trails[0].difficulty);
-      
+    
+    var ul = $("<ul class='collection'>");
     var li = $("<li>");
     var rowList = $("<div class='row collapsible-header' style='margin-bottom: 0px;'>");
     var colName = $("<div class='col s6'>");
@@ -169,8 +168,9 @@ function makeList(response) {
     colName.append(trailNameList);
     rowList.append(colName,colDifficulty,colLength,colLocation);
     li.append(rowList);
-    $(".collection").append(li);
-    
+    ul.append(li);
+    $("#trailContent").append(ul);
+       
   }
 }
 
@@ -252,7 +252,7 @@ function getCurrentForecast () {
 }
 
 function generateTrailInfo(idTrail){
-
+  $("#cardTrailInfo").empty();
   var hikeQrl = "https://www.hikingproject.com/data/get-trails-by-id?ids="+ idTrail + "&key=" + hikeKey;
   
   console.log(hikeQrl);
@@ -264,8 +264,83 @@ function generateTrailInfo(idTrail){
   .then(function (response){
    
     var trailInfo = response.trails[0];
-    console.log(trailInfo);
-    
+    console.log(trailInfo.ascent);
+    var nav = $("<nav>");
+    var divNav = $("<div class='nav-wrapper green darken-3'>");
+    var pTitle = $("<p class='flow-text green darken-3 center'>Trail Info</p>");   
+
+    var divCard = $("<div class='card' style='padding: 20px'>");
+    var h3 = $("<h3 id='trailName' class='center-align'>");
+    h3.text(trailInfo.name);
+    var divImage = $("<div style='padding: 30px;' >");
+    var divContImage = $("<div class='center-align'>");
+    var imgTrail = $("<img id='imgInfo' style='width: auto; height: auto;'src=''>");
+    imgTrail.attr("src",trailInfo.imgMedium);
+    var divCardContent = $("<div class='card-content'>");
+    var h5 = $("<h5 id='summaryTrail' class='center-align card-title'>");
+    h5.text(trailInfo.summary);
+    var row = $("<div class='row'>");
+
+    var divCol1 = $("<div class='col s4 center-align'>");
+    var imgLength = $("<img src='../Group-Project-1/assets/images/length.png' alt='' class='circle responsive-img'>");
+    var spanLength = $("<span class='black-text'>");
+    var divlength = $("<div style='font-weight: bold;'>Length:</div>");
+    var length = $("<div>");
+    length.text(trailInfo.length);
+
+    var divCol2 = $("<div class='col s4 center-align'>");
+    var imgAscent = $("<img src='../Group-Project-1/assets/images/hikingAscent.jpg' alt='' class='circle responsive-img'>");
+    var spanAsDes = $("<span class='black-text'>");
+    var divAscent = $("<div style='font-weight: bold;'>Ascent:</div>");
+    var spanAscent = $("<span style='font-weight: normal;'>");
+    spanAscent.text(trailInfo.ascent);
+    var divDescent = $("<div style='font-weight: bold;'>Descent:</div>");
+    var spanDescent = $("<span style='font-weight: normal;'>");
+    spanDescent.text(trailInfo.descent);
+
+    var divCol3 = $("<div class='col s4 center-align'>");
+    var imgElevation = $("<img src='../Group-Project-1/assets/images/elevation.png' alt='' class='circle responsive-img'>");
+    var spanElevation = $("<span class='black-text'>");
+    var divHigh = $("<div style='font-weight: bold;'>High:</div>");
+    var spanHigh = $("<span style='font-weight: normal;'>");
+    spanHigh.text(trailInfo.high);
+    var divLow = $("<div style='font-weight: bold;'>Low:</div>");
+    var spanLow = $("<span style='font-weight: normal;'>");
+    spanLow.text(trailInfo.low);
+
+    var divCardAction = $("<div class='car-action'>");
+    var iframe = $("<iframe id='map' style='width:100%; max-width:1200px; height:410px;' frameborder='0' scrolling='no' src=''>");
+    var url =  "https://www.trailrunproject.com/widget?v=3&map=1&type=trail&x=-11761235&y=4908907&z=5&id="+trailInfo.id;
+    iframe.attr("src",url);
+
+    divNav.append(pTitle);
+    nav.append(divNav);
+
+    spanLength.append(divlength);
+    spanLength.append(length);
+    divCol1.append(imgLength,spanLength);
+   
+    divAscent.append(spanAscent);
+    divDescent.append(spanDescent);
+    spanAsDes.append(divAscent, divDescent);
+    divCol2.append(imgAscent,spanAsDes);
+
+    divHigh.append(spanHigh);
+    divLow.append(spanLow);
+    spanElevation.append(divHigh,divLow);
+    divCol3.append(imgElevation,spanElevation);
+
+    row.append(divCol1,divCol2,divCol3);
+    divCardContent.append(h5,row);
+    divContImage.append(imgTrail);
+    divImage.append(divContImage);
+
+    divCardAction.append(iframe);
+    divCard.append(h3,divImage,divCardContent,divCardAction);
+
+
+
+    $("#cardTrailInfo").append(nav,divCard);
   });
 
 
