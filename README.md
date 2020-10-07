@@ -1,5 +1,5 @@
 # Group-Project-1
-Team: Melvin, Cesar, Lucas, Nick
+Team: Cesar, Melvin, Lucas, Nick
 
 ________________________________________________________________________________________________________________________________________________________________________________
 # Hike Planning App
@@ -63,6 +63,14 @@ $("#cityName").keypress(function(event) {
             });
 ```
 ---
+# Check out the Hiking Trail app!
+https://lucasbryg.github.io/Group-Project-1/
+
+# User Story
+AS A person who loves to hike
+I WANT an application that can recommend hiking trails near me
+SO THAT I can explore new trails as well as get a general idea of what the trail entails.
+
 ## How To Use
 When the application is loaded,  The user will have an option to choose from hiking, biking, climbing and running trails.  When the user clicks on a panel, the panal presents a short description about the trail activity as well as a link to take the user to the correct HTML page.  Once the input page loads, the user is able to type in a city and the distance they're willing to travel to get to the trail.  When the user clicks the search button, the table is populated with the names of the trails as well as the difficulty, distance, and location.  The user can then click on a trail in the table to have another panel appear with more information about the trail.  
 
