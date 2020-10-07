@@ -29,7 +29,33 @@ img {
    margin-bottom: 0px;
 }
 
-#icon {
+#iconEasy {
    width: 50px;
    height: 50px;
+   background-color: green;
+}
+
+
+#iconEasyInter {
+   width: 50px;
+   height: 50px;
+   background-color: aqua;
+}
+
+#iconInter {
+   width: 50px;
+   height: 50px;
+   background-color: blue;
+}
+
+#iconInterHard {
+   width: 50px;
+   height: 50px;
+   background-color: navy;
+}
+
+#iconHard {
+   width: 50px;
+   height: 50px;
+   background-color: black;
 }

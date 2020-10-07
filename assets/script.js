@@ -59,14 +59,19 @@ $("#searchButton").on("click", () => {
 
                 // getCurrentConditions(response);
                 getCurrentForecast(response);
+
                 
 
                  localStorage.setItem("lat", JSON.stringify(response.city.coord.lat));
                  localStorage.setItem("long",JSON.stringify(response.city.coord.lon));
-                 maxd = 10;
+
                  lat = JSON.stringify(response.city.coord.lat);
                  long = JSON.stringify(response.city.coord.lon);
+
+                 var maxd = $("#distance").val();
+                 localStorage.setItem("distance", JSON.stringify(maxd));
                  
+                
                  console.log(lat);
                 console.log(long);
                 //var lat = JSON.parse(localStorage.getItem("lat"));
@@ -99,8 +104,35 @@ $("#searchButton").on("click", () => {
                  
             });
 
-            
-            
+            console.log(localStorage.lat);
+            console.log(localStorage.long);
+            var lat = JSON.parse(localStorage.getItem("lat"));
+            var long = JSON.parse(localStorage.getItem("long"));
+            var maxd = JSON.parse(localStorage.getItem("distance"));
+            console.log(maxd);
+            var quality
+           
+            let hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + $("#distance").val() + "sort=" + quality + "&key=" + hikeKey;
+            console.log(hikeQrl);
+            console.log(lat);
+            console.log(long);
+            $.ajax({
+              url: hikeQrl,
+              method: "GET"
+          })
+            .then(function (response){
+              console.log(response.trails);
+              console.log(response.trails[0].name);
+              console.log(response.trails[0].location);
+              console.log(response.trails[0].imgSmall);
+              makeList(response);
+
+
+
+            }
+            )
+
+
     });
   
   });
@@ -130,6 +162,7 @@ function makeList(response) {
     console.log(response.trails[i].id);
     li.attr("id",response.trails[i].id);
     li.addClass("rowTrail");
+
     trailNameList.text(response.trails[i].name);    
     trailNameList.prepend(icon);
     colDifficulty.append(spanDifficulty);
@@ -143,6 +176,7 @@ function makeList(response) {
        
   }
 }
+
 
   function getCurrentConditions (response) {
 
@@ -176,6 +210,7 @@ function makeList(response) {
     $("#weatherBox").append(card)
    
   }
+
 
 function getCurrentForecast () {  
   $.ajax({
@@ -311,4 +346,5 @@ function generateTrailInfo(idTrail){
 
 
 };
+
 
