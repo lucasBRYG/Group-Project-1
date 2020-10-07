@@ -31,6 +31,7 @@ $(document).ready(function(){
 
 
 $("#searchButton").on("click", () => {
+  // localStorage.clear();
 
 
 
@@ -132,6 +133,7 @@ function makeList(response) {
     var colDifficulty = $("<div class='col s2'>");
 
 
+
     if (response.trails[i].difficulty === "green"){
     var spanDifficulty = $("<span class='badge green white-text' id='difficultyList1'>").text("Beginner")
     }
@@ -157,6 +159,7 @@ function makeList(response) {
     console.log(response.trails[i].id);
     li.attr("id",response.trails[i].id);
     li.addClass("rowTrail");
+
 
     trailNameList.text(response.trails[i].name);    
     trailNameList.prepend(icon);
@@ -189,7 +192,7 @@ function makeList(response) {
     const cardBody = $("<div>").addClass("card-content white-text");
     const cityDate = $("<h5>").addClass("card-title date").text(response.list[0].dt_txt);
     const image = $("<div>")
-    const image2 = $("<img>").attr("src", "https://openweathermap.org/img/w/" + response.list[0].weather[0].icon + ".png") 
+    const image2 = $("<img>").attr("src", "https://openweathermap.org/img/w/" + response.list[0].weather[0].icon + ".png");
     const temperature = $("<p>").addClass("card-text temp").text("Temperature: " + tempF + " °F");
     const humidity = $("<p>").addClass("card-text humidity").text("Humidity: " + response.list[0].main.humidity + "%");
     const wind = $("<p>").addClass("card-text current-wind").text("Wind Speed: " + response.list[0].wind.speed + " MPH");
@@ -241,6 +244,8 @@ function getCurrentForecast () {
         image.append(image2);
         card.append(cardBody);
         $("#weatherBox").append(card);
+        
+        
       }
     }
   });
