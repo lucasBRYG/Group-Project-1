@@ -45,7 +45,7 @@
                 <div class="col s12 m8 l6" >
                   <div class="card z-depth-5 margin-card">
                     <div class="card-image">
-                      <img src="https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/topic_centers/2019-8/couple-hiking-mountain-climbing-1296x728-header.jpg?w=1155&h=1528">
+                      <img class="activator" src="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2009/1/8/1231428282782/Mountain-biking-001.jpg?width=445&quality=85&auto=format&fit=max&s=23b19c63eb6e1863a0b3a3a8b1242ce2">
                       <span class="card-title">Biking Trail</span>
                     </div>
                     <div class="card-content">
@@ -133,6 +133,54 @@
                       </ul>
                     </div>  
                   </div>
+                  <!--Create a card for Trail Information-->
+                  <div class="card z-depth-5">
+                    <nav>
+                      <div class="nav-wrapper green darken-3">
+                        <p class="flow-text green darken-3 center">Trail Info</p>
+                      </div>
+                    </nav>
+                    <div class="card">
+                      <h3 id="trailName" class="center-align">"Angels Landing"</h3>
+                      <div style="padding: 30px;" >
+                        <div class="center-align"><img id="imgInfo" src="https://cdn2.apstatic.com/photos/hike/7010203_medium_1554398018.jpg"></div>
+                      </div>
+                      <div class="card-content">
+                        <h5 id="summaryTrail" class="center-align card-title">"One of the most memorable National Park hikes. Heavenly views await at the end of an exposed ridge."</h5>
+                        <div class="row">
+                          
+                            <div class="col s4 center-align">
+                              <img src="../Group-Project-1/assets/images/length.png" alt="" class="circle responsive-img">
+                                <span class="black-text">
+                                  <div style="font-weight: bold;">Length:</div>
+                                  <div>10.8 miles</div>  
+                                </span>                              
+                            </div>
+                                                      
+                            <div class="col s4 center-align">
+                              <img src="../Group-Project-1/assets/images/hikingAscent.jpg" alt="" class="circle responsive-img">
+                              <span class="black-text">
+                                <div style="font-weight: bold;">Ascent: <span style="font-weight: normal;">1534 ft</span></div>                                
+                                <div style="font-weight: bold;">Descent: <span style="font-weight: normal;">-1084 ft</span></div>                                    
+                              </span>
+                            </div>
+
+                            <div class="col s4 center-align">
+                              <img src="../Group-Project-1/assets/images/elevation.png" alt="" class="circle responsive-img">
+                              <span class="black-text">
+                                <div style="font-weight: bold;">High: <span style="font-weight: normal;">1440ft</span></div>
+                                <div style="font-weight: bold;">Low: <span style="font-weight: normal;">824ft</span></div> 
+                              </span>
+                            </div>
+                        </div>                            
+                      </div>                     
+                      <div class="card-action">
+                        <p><input type="text" class="form-control" id="trailname" value="7011192"></p>
+                        <iframe id="map" style="width:100%; max-width:1200px; height:410px;" frameborder="0" scrolling="no" src=""></iframe>                                             
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="col s12 m3 l3">                  
                     <div class="card z-depth-5">
@@ -141,70 +189,29 @@
                             <p class="flow-text green darken-3 center">Weather</p>
                           </div>
                         </nav> 
-                        <div class="card-content" style="padding-left: 10px; padding-right: 10px;">
+                        <div id="weatherBox" class="card-content"  style="padding-left: 10px; padding-right: 10px;">
                           <div class="card blue-grey darken-1">
-                            <div class="card-content white-text">
-                              <h5 class='card-title date'>Date</h5>
-                              <div id='icon'><img id='wiconHeader' src='' alt='Weather icon'></div>
-                              <p class='card-text temp'>Temp:</p>
-                              <p class='card-text humidity'>Humidity:</p>   
-                            </div>              
-                          </div>
-                          <div class="card blue-grey darken-1">
-                            <div class="card-content white-text">
-                              <h5 class='card-title date'>Date</h5>
-                              <div id='icon'><img id='wiconHeader' src='' alt='Weather icon'></div>
-                              <p class='card-text temp'>Temp:</p>
-                              <p class='card-text humidity'>Humidity:</p>   
-                            </div>              
-                          </div>
-                          <div class="card blue-grey darken-1">
-                            <div class="card-content white-text">
-                              <h5 class='card-title date'>Date</h5>
-                              <div id='icon'><img id='wiconHeader' src='' alt='Weather icon'></div>
-                              <p class='card-text temp'>Temp:</p>
-                              <p class='card-text humidity'>Humidity:</p>   
-                            </div>              
-                          </div>
-                          <div class="card blue-grey darken-1">
-                            <div class="card-content white-text">
-                              <h5 class='card-title date'>Date</h5>
-                              <div id='icon'><img id='wiconHeader' src='' alt='Weather icon'></div>
-                              <p class='card-text temp'>Temp:</p>
-                              <p class='card-text humidity'>Humidity:</p>   
-                            </div>              
-                          </div>
-                          <div class="card blue-grey darken-1">
-                            <div class="card-content white-text">
-                              <h5 class='card-title date'>Date</h5>
-                              <div id='icon'><img id='wiconHeader' src='' alt='Weather icon'></div>
-                              <p class='card-text temp'>Temp:</p>
-                              <p class='card-text humidity'>Humidity:</p>   
-                            </div>              
-                          </div>
+                            <div id="weatherBox" class="card-content" style="padding-left: 10px; padding-right: 10px;">
+                              
+                            </div>                       
+                          </div>                         
                         </div>                        
                     </div>                 
                 </div>
               </div>
+
+
         </div>
       </div>
     </div>
   </main>  
 
-  <!-- <div class="card-panel hoverable"> Hoverable Card Panel</div>
-    
-  </div> -->
-  <!-- <div class="row">   
-      <div class="col 12">         
-      <div class="omni-calculator" data-calculator="sports/hiking" data-width="300" data-config='{"distance":{"unitDefault":"mi"},"elevation_gain":{"unitDefault":"ft"},"total_equivalent":{"unitDefault":"mi"},"weight":{"unitDefault":"lb"},"backpack_weight":{"unitDefault":"lb"},"weight_lost":{"unitDefault":"lb"}}' data-currency="USD" data-show-row-controls="false" data-version="3" data-t="1601340243523">
-        <div class="omni-calculator-header">Hiking Calculator</div>
-        <div class="omni-calculator-footer">
-          <a href="https://www.omnicalculator.com/sports/hiking" target="_blank"><img alt="Omni" class="omni-calculator-logo" src="https://cdn.omnicalculator.com/embed/omni-calculator-logo-long.svg" /></a>
-        </div>
-      </div>
-      <script async src="https://cdn.omnicalculator.com/sdk.js"></script>   
-      </div>
-    </div> -->
+  
   <script src="assets/script.js"></script>
 </body>
+<script>
+  var url =  "https://www.trailrunproject.com/widget?v=3&map=1&type=trail&x=-11761235&y=4908907&z=5&id="+$("#trailname").val();
+console.log(url);
+ $("#map").attr("src",url);
+</script>
 </html>

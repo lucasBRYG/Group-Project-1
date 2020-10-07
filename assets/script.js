@@ -29,7 +29,9 @@ $(document).ready(function(){
   $('select').material_select();
   $('#weatherBox').empty();
 
+
 $("#searchButton").on("click", () => {
+
 
 
         // localStorage.clear();
@@ -41,8 +43,6 @@ $("#searchButton").on("click", () => {
 
         // clear cityname input box
         $("#cityName").val("");
-
-
 
 
         // full url to call api
@@ -73,10 +73,12 @@ $("#searchButton").on("click", () => {
                  localStorage.setItem("distance", JSON.stringify(maxd));
                  
                 
+
                 //  console.log(lat);
                 // console.log(long);
                 var lat = JSON.parse(localStorage.getItem("lat"));
                 var long = JSON.parse(localStorage.getItem("long"));
+
                 let hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&key=" + hikeKey;
 
                 console.log(lat);
@@ -103,7 +105,8 @@ $("#searchButton").on("click", () => {
                  
             });
 
-            
+
+
 
     });
   
@@ -112,6 +115,7 @@ $("#searchButton").on("click", () => {
 function makeList(response) {
 
   $(".collection").empty();
+
 
     for (i=0; i < response.trails.length; i++) {
 
@@ -126,6 +130,7 @@ function makeList(response) {
     var trailNameList = $("<div id='trailNameList'>");
     var icon = $("<i class='material-icons'>").text("place");
     var colDifficulty = $("<div class='col s2'>");
+
 
     if (response.trails[i].difficulty === "green"){
     var spanDifficulty = $("<span class='badge green white-text' id='difficultyList1'>").text("Beginner")
@@ -146,6 +151,7 @@ function makeList(response) {
     var colLength = $("<div class='col s1 center-align'>");
     var colLocation = $("<div class='col s3 center-align'>");
     var spanLength = $("<span id='lengthList'>").text(response.trails[i].length);
+
     var spanLocation = $("<span id='lengthList'>").text(response.trails[i].location);
     
     console.log(response.trails[i].id);
