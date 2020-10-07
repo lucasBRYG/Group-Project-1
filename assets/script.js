@@ -30,6 +30,7 @@ $(document).ready(function(){
   $('#weatherBox').empty();
 
 $("#searchButton").on("click", () => {
+  // localStorage.clear();
 
         $('#forecastH5').addClass('show');
 
@@ -135,29 +136,6 @@ function makeList(response) {
     var spanLength = $("<span id='lengthList'>").text(response.trails[i].length);
     var spanLocation = $("<span id='lengthList'>").text(response.trails[i].location);
     
-
-
-   function makeList(response) {
-    var i;
-    for (i = 0; i < response.trails.length; i++) {
-
-    console.log(response.trails[1].name);
-    console.log(response.trails[1].location);
-    console.log(response.trails[1].length);
-    console.log(response.trails[1].difficulty);
-    var li = $("<li>");
-    var rowList = $("<div class='row collapsible-header' style='margin-bottom: 0px;'>");
-    var colName = $("<div class='col s6'>");
-    var trailNameList = $("<div id='trailNameList'>").text(response.trails[i].name);
-    var icon = $("<i class='material-icons'>").text("place");
-    var span = $("<span class='badge green white-text' id='difficultyList1'>").text(response.trails[i].difficulty);
-    var colLength = $("<div class='col s3 center-align'>");
-    var colLocation = $("<div class='col s3 center-align'>");
-    var spanLength = $("<span class='col s3 center-align'>").text(response.trails[i].length);
-    var spanLocation = $("<span class='col s3 center-align'>").text(response.trails[i].location);
-    
-    }
-   }
 
     trailNameList.text(response.trails[i].name);    
     trailNameList.prepend(icon);
