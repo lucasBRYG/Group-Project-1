@@ -83,8 +83,19 @@ $("#searchButton").on("click", () => {
                 var lat = JSON.parse(localStorage.getItem("lat"));
                 var long = JSON.parse(localStorage.getItem("long"));
 
-                let hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&key=" + hikeKey;
+                //here's where we have a conditional evaluate the filter input and generate the variable we need to filter the API call
+                var filter;
+                if ($("#filter-select").val()[0] == "quality"){
+                  filter = "quality"
+                }
+                if ($("#filter-select").val()[0] == "distance"){
+                  filter = "distance"
+                }
 
+                //added the sort parameter to the url
+                let hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+  "&sort=" + filter + "&key=" + hikeKey;
+
+                console.log(hikeQrl);
                 console.log(lat);
                 console.log(long);
                 $.ajax({
@@ -113,7 +124,9 @@ $("#searchButton").on("click", () => {
 
 function makeList(response) {
 
-  $(".collection").empty();
+
+  //changed this to empty the dive with the list inside to avoid <ul> divs from piling up
+  $("#trailContent").empty();
 
 
     for (i=0; i < response.trails.length; i++) {
