@@ -11,11 +11,6 @@ var lat = 0;
 var long = 0;
 var maxd = 0;
 
-//  Biking query url: https://www.mtbproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=
-//  Running query url: https://www.trailrunproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=
-//  Climbing query rul: https://www.mountainproject.com/data/get-routes-for-lat-lon?lat=40.03&lon=-105.25&maxDistance=10&minDiff=5.6&maxDiff=5.10&key=
-
-
 $("#cityName").keypress(function(event) { 
 	
 	if (event.keyCode === 13) { 
@@ -64,7 +59,6 @@ $("#searchButton").on("click", () => {
                 let tempF = (response.list[0].main.temp - 273.15) * 1.80 + 32;
                 console.log(Math.floor(tempF));
 
-                // getCurrentConditions(response);
                 getCurrentForecast(response);
 
                 
@@ -78,13 +72,26 @@ $("#searchButton").on("click", () => {
                  var maxd = $("#distance").val();
                  localStorage.setItem("distance", JSON.stringify(maxd));
 
-                //  console.log(lat);
-                // console.log(long);
                 var lat = JSON.parse(localStorage.getItem("lat"));
                 var long = JSON.parse(localStorage.getItem("long"));
 
-                let hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&key=" + hikeKey;
-
+                var currentPage = document.location.href.match(/[^\/]+$/)[0];
+               
+                var hikeQrl = "";
+                if (currentPage === "hiking.html"){
+                  hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&key=" + hikeKey;
+                  
+                } else if ( currentPage ==="biking.html") {
+                  hikeQrl = "https://www.mtbproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&key=" + bikeKey;
+                  
+                } else if ( currentPage ==="running.html" ){
+                  hikeQrl = "https://www.trailrunproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&key=" + runKey;
+                  
+                } else if ( currentPage === "climbing.html") { 
+                  hikeQrl = "https://www.mountainproject.com/data/get-routes-for-lat-lon?lat=" + lat +"&lon="+ long +"&maxDistance="+maxd+"&minDiff=5.6&maxDiff=5.10&key="+climbKey;             
+                  
+                }
+       
                 console.log(lat);
                 console.log(long);
                 console.log(hikeQrl);
@@ -93,13 +100,13 @@ $("#searchButton").on("click", () => {
                   method: "GET"
                 })
                 .then(function (response){
+                  console.log(response);
                   console.log(response.trails);
                   console.log(response.trails[0].name);
                   console.log(response.trails[0].location);
                   console.log(response.trails[0].imgSmall);
                   makeList(response);
                   $(".rowTrail").on("click", function(){  // Event listener, for when a row of the list  is clicked
-                    //clearCardTrail();
                     $('#cardTrailInfo').show();
                     console.log($(this).attr("id"));
                     generateTrailInfo($(this).attr("id"));
@@ -200,8 +207,6 @@ function makeList(response) {
     const precip = $("<p>").addClass("card-text Visibility").text(`Chance of Precipitation: ${pop}%`);
     
     
-    // $("div").append('div class="card z-depth-5"> This is the added')
-
     cardBody.append(cityDate, image, temperature, humidity, wind, precip);
     image.append(image2);
     card.append(cardBody);
@@ -218,12 +223,10 @@ function getCurrentForecast () {
 
     $('#weatherBox').empty();
 
-    // variable to hold response.list
+  
     let results = response.list;
     console.log(results);    
-    //declare start date to check against
-    // startDate = 20
-    //have end date, endDate = startDate + 5
+ 
     for (let i = 0; i < results.length; i++) {
       let day = Number(results[i].dt_txt.split('-')[2].split(' ')[0]);
       let hour = results[i].dt_txt.split('-')[2].split(' ')[1];
@@ -254,9 +257,27 @@ function getCurrentForecast () {
 
 function generateTrailInfo(idTrail){
   $("#cardTrailInfo").empty();
-  var hikeQrl = "https://www.hikingproject.com/data/get-trails-by-id?ids="+ idTrail + "&key=" + hikeKey;
-  
-  console.log(hikeQrl);
+  var currentPage = document.location.href.match(/[^\/]+$/)[0];
+  var hikeQrl;
+                if (currentPage === "hiking.html"){
+                  hikeQrl = "https://www.hikingproject.com/data/get-trails-by-id?ids="+ idTrail + "&key=" + hikeKey;
+                  
+                  
+                } else if ( currentPage ==="biking.html") {
+                  hikeQrl = "https://www.mtbproject.com/data/get-trails-by-id?ids="+ idTrail + "&key=" + bikeKey;
+                  
+                  
+                } else if ( currentPage ==="running.html" ){
+                  hikeQrl = "https://www.trailrunproject.com/data/get-trails-by-id?ids="+ idTrail + "&key=" + runKey;
+                
+                  
+                } else if ( currentPage === "climbing.html") { 
+                  hikeQrl = "https://www.mountainproject.com/data/get-trails-by-id?ids="+ idTrail + "&key=" + climbKey;
+                  
+                  
+                }
+
+   console.log(hikeQrl);
 
   $.ajax({
     url: hikeQrl,
@@ -275,7 +296,7 @@ function generateTrailInfo(idTrail){
     h3.text(trailInfo.name);
     var divImage = $("<div style='padding: 30px;' >");
     var divContImage = $("<div class='center-align'>");
-    var imgTrail = $("<img id='imgInfo' style='width: auto; height: auto;'src=''>");
+    var imgTrail = $("<img id='imgInfo' style='width: 400px; height: 400px;'src=''>");
     imgTrail.attr("src",trailInfo.imgMedium);
     var divCardContent = $("<div class='card-content'>");
     var h5 = $("<h5 id='summaryTrail' class='center-align card-title'>");
