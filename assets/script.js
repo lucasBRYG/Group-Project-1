@@ -133,64 +133,67 @@ function makeList(response) {
     var i=0; 
     while (i < 10) {
 
-    console.log(response.trails[count].name);
-    console.log(response.trails[count].location);
-    console.log(response.trails[count].length);
-    console.log(response.trails[count].difficulty);
-    if (response.trails[count].difficulty == $("#difficulty-select").val()[0]){
+      console.log(response.trails[count].name);
+      console.log(response.trails[count].location);
+      console.log(response.trails[count].length);
+      console.log(response.trails[count].difficulty);
+      console.log($("#difficulty-select").val()[0]);
+      console.log(response.trails[count].difficulty)
+      var diffSelector = $("#difficulty-select").val()[0];
+      if (response.trails[count].difficulty === diffSelector){
 
-      var ul = $("<ul class='collection'>");
-      var li = $("<li>");
-      var rowList = $("<div class='row collapsible-header' style='margin-bottom: 0px;'>");
-      var colName = $("<div class='col s6'>");
-      var trailNameList = $("<div id='trailNameList'>");
-      var icon = $("<i class='material-icons'>").text("place");
-      var colDifficulty = $("<div class='col s2'>");
-
-
-
-    if (response.trails[i].difficulty === "green"){
-    var spanDifficulty = $("<span class='badge green white-text' id='difficultyList1'>").text("Beginner")
-    }
-    if (response.trails[i].difficulty === "blue"){
-     spanDifficulty = $("<span class='badge blue white-text' id='difficultyList1'>").text("Easy")
-    }
-    if (response.trails[i].difficulty === "greenBlue"){
-      spanDifficulty = $("<span class='badge cyan white-text' id='difficultyList1'>").text("Intermediate")
-    }
-     if (response.trails[i].difficulty === "blueBlack"){
-      spanDifficulty = $("<span class='badge indigo darken-4 white-text' id='difficultyList1'>").text("Difficult")
-    }
-     if (response.trails[i].difficulty === "black"){
-      spanDifficulty = $("<span class='badge black white-text' id='difficultyList1'>").text("Expert")
-    }
-
-    var colLength = $("<div class='col s1 center-align'>");
-    var colLocation = $("<div class='col s3 center-align'>");
-    var spanLength = $("<span id='lengthList'>").text(response.trails[count].length);
-
-    var spanLocation = $("<span id='lengthList'>").text(response.trails[count].location);
-    
-    console.log(response.trails[count].id);
-    li.attr("id",response.trails[count].id);
-    li.addClass("rowTrail");
+        var ul = $("<ul class='collection'>");
+        var li = $("<li>");
+        var rowList = $("<div class='row collapsible-header' style='margin-bottom: 0px;'>");
+        var colName = $("<div class='col s6'>");
+        var trailNameList = $("<div id='trailNameList'>");
+        var icon = $("<i class='material-icons'>").text("place");
+        var colDifficulty = $("<div class='col s2'>");
 
 
-    trailNameList.text(response.trails[i].name);    
-    trailNameList.prepend(icon);
-    colDifficulty.append(spanDifficulty);
-    colLocation.append(spanLocation);
-    colLength.append(spanLength);
-    colName.append(trailNameList);
-    rowList.append(colName,colDifficulty,colLength,colLocation);
-    li.append(rowList);
-    ul.append(li);
-    $("#trailContent").append(ul);
 
-      i++;
+        if (response.trails[count].difficulty === "green"){
+        var spanDifficulty = $("<span class='badge green white-text' id='difficultyList1'>").text("Beginner")
+        }
+        if (response.trails[count].difficulty === "blue"){
+        spanDifficulty = $("<span class='badge blue white-text' id='difficultyList1'>").text("Easy")
+        }
+        if (response.trails[count].difficulty === "greenBlue"){
+          spanDifficulty = $("<span class='badge cyan white-text' id='difficultyList1'>").text("Intermediate")
+        }
+        if (response.trails[count].difficulty === "blueBlack"){
+          spanDifficulty = $("<span class='badge indigo darken-4 white-text' id='difficultyList1'>").text("Difficult")
+        }
+        if (response.trails[count].difficulty === "black"){
+          spanDifficulty = $("<span class='badge black white-text' id='difficultyList1'>").text("Expert")
+        }
 
-    }
-    count++;
+        var colLength = $("<div class='col s1 center-align'>");
+        var colLocation = $("<div class='col s3 center-align'>");
+        var spanLength = $("<span id='lengthList'>").text(response.trails[count].length);
+
+        var spanLocation = $("<span id='lengthList'>").text(response.trails[count].location);
+        
+        console.log(response.trails[count].id);
+        li.attr("id",response.trails[count].id);
+        li.addClass("rowTrail");
+
+
+        trailNameList.text(response.trails[i].name);    
+        trailNameList.prepend(icon);
+        colDifficulty.append(spanDifficulty);
+        colLocation.append(spanLocation);
+        colLength.append(spanLength);
+        colName.append(trailNameList);
+        rowList.append(colName,colDifficulty,colLength,colLocation);
+        li.append(rowList);
+        ul.append(li);
+        $("#trailContent").append(ul);
+
+        i++;
+
+      }
+      count++;
   }
 }
     // var ul = $("<ul class='collection'>");
