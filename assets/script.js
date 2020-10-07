@@ -87,6 +87,7 @@ $("#searchButton").on("click", () => {
 
                 console.log(lat);
                 console.log(long);
+                console.log(hikeQrl);
                 $.ajax({
                   url: hikeQrl,
                   method: "GET"
@@ -310,7 +311,23 @@ function generateTrailInfo(idTrail){
 
     var divCardAction = $("<div class='car-action'>");
     var iframe = $("<iframe id='map' style='width:100%; max-width:1200px; height:410px;' frameborder='0' scrolling='no' src=''>");
-    var url =  "https://www.trailrunproject.com/widget?v=3&map=1&type=trail&x=-11761235&y=4908907&z=5&id="+trailInfo.id;
+
+    var currentPage = document.location.href.match(/[^\/]+$/)[0];
+    console.log(currentPage);
+    var typeTrail = "";
+    if (currentPage === "hiking.html"){
+      typeTrail = "https://www.hikingproject.com/widget?v=3&map=1&type=trail&x=-11761235&y=4908907&z=5&id=";
+      imgAscent.attr("src","../Group-Project-1/assets/images/hikingAscent.jpg");
+    } else if ( currentPage ==="biking.html") {
+      typeTrail = "https://www.mtbproject.com/widget?v=3&map=1&type=trail&x=-11761235&y=4908907&z=5&id=";
+      imgAscent.attr("src","../Group-Project-1/assets/images/bikingAscent.png");
+    } else if ( currentPage ==="running.html" ){
+      typeTrail = "https://www.trailrunproject.com/widget?v=3&map=1&type=trail&x=-11761235&y=4908907&z=5&id=";
+      imgAscent.attr("src","../Group-Project-1/assets/images/runningAscent.jpg");
+    } else if ( currentPage === "climbing.html") { 
+      typeTrail = "https://www.mountainproject.com/widget?v=3&map=1&type=trail&x=-11761235&y=4908907&z=5&id=";
+    }
+    var url = typeTrail+trailInfo.id;    
     iframe.attr("src",url);
 
     divNav.append(pTitle);
