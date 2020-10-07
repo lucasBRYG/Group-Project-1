@@ -75,23 +75,30 @@ $("#searchButton").on("click", () => {
                 var lat = JSON.parse(localStorage.getItem("lat"));
                 var long = JSON.parse(localStorage.getItem("long"));
 
+                var filter;
+                if ($("#filter-select").val()[0] == "quality"){
+                  filter = "quality"
+                }
+                if ($("#filter-select").val()[0] == "distance"){
+                  filter = "distance"
+                }
+
                 var currentPage = document.location.href.match(/[^\/]+$/)[0];
                
                 var hikeQrl = "";
                 if (currentPage === "hiking.html"){
-                  hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&key=" + hikeKey;
+                  hikeQrl = "https://www.hikingproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&sort=" + filter + "&maxResults=100"  +"&key=" + hikeKey;
                   
                 } else if ( currentPage ==="biking.html") {
-                  hikeQrl = "https://www.mtbproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&key=" + bikeKey;
+                  hikeQrl = "https://www.mtbproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&sort=" + filter + "&maxResults=100"  + "&key=" + bikeKey;
                   
                 } else if ( currentPage ==="running.html" ){
-                  hikeQrl = "https://www.trailrunproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&key=" + runKey;
+                  hikeQrl = "https://www.trailrunproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&sort=" + filter + "&maxResults=100"  + "&key=" + runKey;
                   
                 } else if ( currentPage === "climbing.html") { 
-                  hikeQrl = "https://www.mountainproject.com/data/get-routes-for-lat-lon?lat=" + lat +"&lon="+ long +"&maxDistance="+maxd+"&minDiff=5.6&maxDiff=5.10&key="+climbKey;             
+                  hikeQrl = "https://www.mountainproject.com/data/get-routes-for-lat-lon?lat=" + lat +"&lon="+ long +"&maxDistance="+maxd+"&sort=" + filter + "&maxResults=100"  +"&minDiff=5.6&maxDiff=5.10&key="+climbKey;             
                   
                 }
-       
                 console.log(lat);
                 console.log(long);
                 console.log(hikeQrl);

@@ -72,12 +72,16 @@
                               <label for="distance">Distance</label>
                             </div>                
                           </div>
-                          <div class="row mbottom-field" style="margin-top: 0px;">
-                            <div class="input-field col s12" style="margin-top: 0px;">
-                              <p style="font-size: 12px; color: gray;">Date</p>
-                              <input placeholder="Date of visit" id="date" type="date" class="validate">
-                            </div>                
-                          </div>              
+                          <div class="row mbottom-field">
+                            <div class="input-field col s12">
+                              <select  id = "filter-select"  multiple>
+                                <option value="" disabled selected>Choose your option</option>
+                                <option value="quality">Quality</option>                    
+                                <option value="distance">Distance</option>
+                              </select>
+                              <label>Sort by:</label>
+                            </div>
+                          </div>                  
                         </form>
                       </div>          
                       <div class="card-action center-align">
