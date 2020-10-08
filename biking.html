@@ -56,25 +56,26 @@
                           </div>
                           <div class="row mbottom-field">
                             <div class="input-field col s12">
-                              <select multiple>
-                                <option value="" disabled selected>Choose your option</option>
-                                <option value="1">Easy</option>                    
-                                <option value="3">Intermediate</option>                    
-                                <option value="5">Difficult</option>
-                                <option value="6">Very Difficult</option>
+                              <select id = "difficulty-select" multiple>
+                                <option value="" disabled selected>Choose your option (required)</option>
+                                <option value="green">Easy</option>
+                                <option value="greenBlue">Easy/Intermediate</option>                
+                                <option value="blue">Intermediate</option>
+                                <option value="blueBlack">Intermediate/Hard</option>                    
+                                <option value="black">Hard</option>
                               </select>
                               <label>Difficulty</label>
                             </div>
                           </div>
                           <div class="row mbottom-field">
                             <div class="input-field col s12">
-                              <input placeholder="Enter distance from City" id="distance" type="text" class="validate">
+                              <input placeholder="Enter distance from City (optional)" id="distance" type="text" class="validate">
                               <label for="distance">Distance</label>
                             </div>                
                           </div>
                           <div class="row mbottom-field">
                             <div class="input-field col s12">
-                              <select  id = "filter-select"  multiple>
+                              <select  id = "filter-select">
                                 <option value="" disabled selected>Choose your option</option>
                                 <option value="quality">Quality</option>                    
                                 <option value="distance">Distance</option>
@@ -100,9 +101,7 @@
                         <p class="flow-text green darken-3 center">Trails</p>
                       </div>
                     </nav>
-                    <div id="trailContent" class="card-content">
-                      <!-- <ul class="collection">                              
-                      </ul> -->
+                    <div id="trailContent" class="card-content">                     
                     </div>  
                   </div>
                   <!--Create a card for Trail Information-->
