@@ -77,12 +77,23 @@ When the application is loaded,  The user will have an option to choose from hik
 ## Screenshots
 - Search Card
 ![picture](assets/images/Indexpic.png)
-- Current Weather Information 
+
+- Current Weather Information
+
 ![picture](assets/images/Hikingpanel.png)
+
 - 5 Days Forecast
+
 ![picture](assets/images/trailinfo.png)
-- Alert if the city was not found
+
+- List of Trails
+
 ![picture](assets/images/trailtable.png)
+
+- Weather Forecast
+
+![picture](assets/images/weather.png)
+
 [Back To The Top](#Weather-Dashboard)
 ---
 ## References
