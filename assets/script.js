@@ -31,6 +31,9 @@ $(document).ready(function(){
   $("#searchButton").on("click", () => {  // Adding click event listen listener to all buttons
         
         if ($("#cityName").val().length === 0){
+          $('#cardTrailInfo').hide();
+          $('#trailBox').hide();
+          $('#weatherCard').hide();
           alert("City is required");
           return;
         }
