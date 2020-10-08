@@ -7,6 +7,7 @@ const bikeKey = "200931616-afc833c049b5997e40e044a809f9cd91";
 const runKey = "200931616-afc833c049b5997e40e044a809f9cd91";
 const climbKey = "200931616-01e2cafc553024f568bca2e9d24d47b5";
 const hikeKey = "200929750-d723e897b2d3dea9d999e2d05c66faa4";
+const powderkey = "200929765-58e44682209185ac5d6d43b2d266c58d";
 var lat = 0;
 var long = 0;
 var maxd = 0;
@@ -179,7 +180,7 @@ function generateTrailInfo(idTrail){ // All data is being pulled correctly and p
                 } else if ( currentPage ==="running.html" ){
                   hikeQrl = "https://www.trailrunproject.com/data/get-trails-by-id?ids="+ idTrail + "&key=" + runKey;
                 } else if ( currentPage === "climbing.html") { 
-                  hikeQrl = "https://www.mountainproject.com/data/get-trails-by-id?ids="+ idTrail + "&key=" + climbKey;
+                  hikeQrl = "https://www.powderproject.com/data/get-trails-by-id?ids="+ idTrail + "&key=" + powderkey;
                 }
 
    console.log(hikeQrl);
@@ -250,7 +251,7 @@ function generateTrailInfo(idTrail){ // All data is being pulled correctly and p
       typeTrail = "https://www.trailrunproject.com/widget?v=3&map=1&type=trail&x=-11761235&y=4908907&z=5&id=";
       imgAscent.attr("src","../Group-Project-1/assets/images/runningAscent.jpg");
     } else if ( currentPage === "climbing.html") { 
-      typeTrail = "https://www.mountainproject.com/widget?v=3&map=1&type=trail&x=-11761235&y=4908907&z=5&id=";
+      typeTrail = "https://www.powderproject.com/widget?v=3&map=1&type=trail&x=-11761235&y=4908907&z=5&id=";
     }
     var url = typeTrail+trailInfo.id;    
     iframe.attr("src",url);
@@ -315,7 +316,8 @@ function apiCallOut(city){
                hikeQrl = "https://www.trailrunproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&sort=" + filter + "&maxResults=100"  + "&key=" + runKey;
                   
             } else if ( currentPage === "climbing.html") { 
-               hikeQrl = "https://www.mountainproject.com/data/get-routes-for-lat-lon?lat=" + lat +"&lon="+ long +"&maxDistance="+maxd+"&sort=" + filter + "&maxResults=100"  +"&minDiff=5.6&maxDiff=5.10&key="+climbKey;             
+              
+               hikeQrl = "https://www.powderproject.com/data/get-trails?lat=" + lat + "&lon=" + long + "&maxDistance=" + maxd+ "&sort=" + filter + "&maxResults=100"  + "&key=" + powderkey;
                   
             }
             console.log(lat);
@@ -326,11 +328,7 @@ function apiCallOut(city){
                 method: "GET"
              })
               .then(function (response){
-                console.log(response);
-                console.log(response.trails);
-                console.log(response.trails[0].name);
-                console.log(response.trails[0].location);
-                console.log(response.trails[0].imgSmall);
+
                 makeList(response);
                 $(".rowTrail").on("click", function(){  // Event listener, for when a row of the list  is clicked
                   $('#cardTrailInfo').show();
