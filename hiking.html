@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="assets/style.css">
     <title>Trail Mixer</title>
 </head>
-<body>
+<body>  
   <header>
     <nav>
       <div class="nav-wrapper green darken-3">
@@ -57,7 +57,7 @@
                           <div class="row mbottom-field">
                             <div class="input-field col s12">
                               <select id = "difficulty-select" multiple>
-                                <option value="" disabled selected>Choose your option</option>
+                                <option value="" disabled selected>Choose your option (required)</option>
                                 <option value="green">Easy</option>
                                 <option value="greenBlue">Easy/Intermediate</option>                
                                 <option value="blue">Intermediate</option>
@@ -69,21 +69,22 @@
                           </div>
                           <div class="row mbottom-field">
                             <div class="input-field col s12">
-                              <input placeholder="Enter distance from City" id="distance" type="text" class="validate">
+                              <input placeholder="Enter distance from City (optional)" id="distance" type="number" class="validate">
                               <label for="distance">Distance</label>
                             </div>                
                           </div>
-
-                          <!--- changed this div to be an option for the user to filter their search --->
                           <div class="row mbottom-field">
                             <div class="input-field col s12">
-                              <select  id = "filter-select"  multiple>
+                              <select  id = "filter-select">
                                 <option value="" disabled selected>Choose your option</option>
                                 <option value="quality">Quality</option>                    
                                 <option value="distance">Distance</option>
                               </select>
                               <label>Sort by:</label>
                             </div>
+
+                          </div>              
+
                           </div>  
 
                         </form>
@@ -104,9 +105,7 @@
                         <p class="flow-text green darken-3 center">Trails</p>
                       </div>
                     </nav>
-                    <div id="trailContent" class="card-content">
-                      <!-- <ul class="collection">                              
-                      </ul> -->
+                    <div id="trailContent" class="card-content">                     
                     </div>  
                   </div>
                   <!--Create a card for Trail Information-->
